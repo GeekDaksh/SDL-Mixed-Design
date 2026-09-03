@@ -32,3 +32,4 @@ data/s11_propose/*
 data/s12_learn/*
 reports/*
 !**/.gitkeep
+_to_delete/
