@@ -1,0 +1,26 @@
+# The producing plant. Everything here is plant-specific and travels with the dataset.
+# Every value is null in the scaffold. The comment names who supplies it.
+
+plant:
+  name: null                      # plant
+  location: null                  # plant
+  type: null                      # plant (RMC / site batching)
+
+quality_control:
+  standard_deviation_source: null # plant (established from test results) or standard (assumed)
+  sample_count: null              # plant (number of results behind the established value)
+  degree_of_control: null         # plant
+
+batching:
+  method: null                    # plant (weigh-batched / volume-batched)
+  moisture_correction: null       # plant (applied at batching, yes/no)
+  aggregate_condition: null       # plant (SSD / air-dry / as-stocked)
+  tolerances: null                # plant
+
+curing:
+  method: null                    # plant
+  test_ages: null                 # engineer
+
+testing:
+  specimen_type: null             # plant (cube / cylinder)
+  machine_calibration_date: null  # plant

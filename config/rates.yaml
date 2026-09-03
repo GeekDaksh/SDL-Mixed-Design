@@ -1,0 +1,27 @@
+# Commercial and environmental rate table, consumed by s10_price.
+# Arithmetic only — no model, no standards value.
+# Every value is null in the scaffold. The comment names who supplies it.
+
+currency: null                    # engineer
+basis: null                       # engineer (per tonne / per cubic metre / per litre)
+quoted_on: null                   # plant (date of the quotation)
+
+cost:
+  cement: null                    # plant (supplier quotation)
+  fly_ash: null                   # plant (supplier quotation)
+  ggbs: null                      # plant (supplier quotation)
+  msand: null                     # plant (supplier quotation)
+  coarse_aggregate: null          # plant (supplier quotation)
+  admixture: null                 # plant (supplier quotation)
+  water: null                     # plant
+  batching: null                  # plant (fixed cost per cubic metre)
+
+carbon:
+  cement: null                    # material datasheet (EPD)
+  fly_ash: null                   # material datasheet (EPD)
+  ggbs: null                      # material datasheet (EPD)
+  msand: null                     # material datasheet (EPD)
+  coarse_aggregate: null          # material datasheet (EPD)
+  admixture: null                 # material datasheet (EPD)
+  water: null                     # material datasheet (EPD)
+  batching: null                  # plant (energy use per cubic metre)

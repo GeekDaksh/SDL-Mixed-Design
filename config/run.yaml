@@ -1,0 +1,22 @@
+# One pipeline run. Every value is null in the scaffold.
+# The comment names who supplies it.
+
+run:
+  id: null                        # engineer
+  description: null               # engineer
+  seed: null                      # engineer (reproducibility)
+
+paths:
+  source_dir: null                # engineer
+  artifact_root: null             # engineer
+  report_dir: null                # engineer
+
+standards:
+  manifest: null                  # standard (written by scripts/00_freeze_standards.py)
+  registry_version: null          # standard (s01_codify output version)
+
+stages:
+  start: null                     # engineer (stage number to start from)
+  stop: null                      # engineer (stage number to stop after)
+
+workability_target: null  # "slump" | "delta_water" — undecided, see pipeline-architecture-v1.md §6

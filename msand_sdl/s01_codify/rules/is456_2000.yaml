@@ -1,0 +1,5 @@
+standard: IS 456
+year: 2000
+source_file: standards/is456_2000.pdf
+source_sha256: null      # written by scripts/00_freeze_standards.py
+rules: []                # populated in the S01 implementation task
