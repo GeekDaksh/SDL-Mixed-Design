@@ -2,7 +2,7 @@
 """Fit the strength and workability models and their classical baselines.
 
 Stage: S07 STRENGTH, S08 FLOW
-Spec:  Build_Manual_v3.md §S07, §S08
+Spec:  docs/Build_Manual_v3.md §2, §2
 Status: scaffold — not implemented.
 """
 
@@ -13,12 +13,12 @@ import argparse
 
 def parse_args() -> argparse.Namespace:
     """Parse the command line."""
-    raise NotImplementedError("scripts.02_fit_models.parse_args — see Build_Manual_v3.md §S07, §S08")
+    raise NotImplementedError("scripts.02_fit_models.parse_args — see docs/Build_Manual_v3.md §2, §2")
 
 
 def main() -> int:
     """Entry point."""
-    raise NotImplementedError("scripts.02_fit_models.main — see Build_Manual_v3.md §S07, §S08")
+    raise NotImplementedError("scripts.02_fit_models.main — see docs/Build_Manual_v3.md §2, §2")
 
 
 if __name__ == "__main__":

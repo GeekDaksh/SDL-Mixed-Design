@@ -1,7 +1,7 @@
 """Random split versus grouped split, side by side.
 
 Stage: S06 EVALUATE
-Spec:  Build_Manual_v3.md §S06
+Spec:  docs/Build_Manual_v3.md §7.1
 Status: scaffold — not implemented.
 """
 
@@ -16,17 +16,17 @@ if TYPE_CHECKING:
 def random_split_score(frame: pd.DataFrame) -> dict[str, float]:
     """Score the model under a naive random split. Reported only for comparison."""
     raise NotImplementedError(
-        "s06_evaluate.leakage.random_split_score — see Build_Manual_v3.md §S06"
+        "s06_evaluate.leakage.random_split_score — see docs/Build_Manual_v3.md §7.1"
     )
 
 
 def grouped_split_score(frame: pd.DataFrame) -> dict[str, float]:
     """Score the model under the design-level grouped split. This is the honest number."""
     raise NotImplementedError(
-        "s06_evaluate.leakage.grouped_split_score — see Build_Manual_v3.md §S06"
+        "s06_evaluate.leakage.grouped_split_score — see docs/Build_Manual_v3.md §7.1"
     )
 
 
 def gap(random: dict[str, float], grouped: dict[str, float]) -> dict[str, float]:
     """Return the difference between the two, metric by metric."""
-    raise NotImplementedError("s06_evaluate.leakage.gap — see Build_Manual_v3.md §S06")
+    raise NotImplementedError("s06_evaluate.leakage.gap — see docs/Build_Manual_v3.md §7.1")

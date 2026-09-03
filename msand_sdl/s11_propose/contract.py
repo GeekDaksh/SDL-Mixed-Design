@@ -9,11 +9,11 @@ from dataclasses import dataclass
 class ProposeInput:
     """Input contract for S11."""
 
-    # TODO(s11): fields per Build_Manual_v3.md §S11
+    # TODO(s11): fields per docs/Build_Manual_v3.md §10
 
 
 @dataclass(frozen=True)
 class ProposeOutput:
     """Output contract for S11."""
 
-    # TODO(s11): fields per Build_Manual_v3.md §S11
+    # TODO(s11): fields per docs/Build_Manual_v3.md §10

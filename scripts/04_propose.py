@@ -2,7 +2,7 @@
 """Design a seed mix, verify it, and propose a ranked candidate portfolio.
 
 Stage: S04, S05, S09, S10, S11
-Spec:  Build_Manual_v3.md §S11
+Spec:  docs/Build_Manual_v3.md §2
 Status: scaffold — not implemented.
 """
 
@@ -13,12 +13,12 @@ import argparse
 
 def parse_args() -> argparse.Namespace:
     """Parse the command line."""
-    raise NotImplementedError("scripts.04_propose.parse_args — see Build_Manual_v3.md §S11")
+    raise NotImplementedError("scripts.04_propose.parse_args — see docs/Build_Manual_v3.md §2")
 
 
 def main() -> int:
     """Entry point."""
-    raise NotImplementedError("scripts.04_propose.main — see Build_Manual_v3.md §S11")
+    raise NotImplementedError("scripts.04_propose.main — see docs/Build_Manual_v3.md §2")
 
 
 if __name__ == "__main__":

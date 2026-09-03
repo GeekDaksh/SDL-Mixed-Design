@@ -1,7 +1,7 @@
 """Decision variables and their bounds; cement and cementitious separate.
 
 Stage: S11 PROPOSE
-Spec:  Build_Manual_v3.md §S11
+Spec:  docs/Build_Manual_v3.md §10
 Status: scaffold — not implemented.
 """
 
@@ -16,7 +16,7 @@ from ..contracts import Requirement
 class Variable:
     """One decision variable and the bounds the search may move it between."""
 
-    # TODO(s11): fields per Build_Manual_v3.md §S11
+    # TODO(s11): fields per docs/Build_Manual_v3.md §10
 
 
 def variables(requirement: Requirement) -> tuple[Variable, ...]:
@@ -25,9 +25,9 @@ def variables(requirement: Requirement) -> tuple[Variable, ...]:
     Cement and total cementitious are separate variables. IS 456 cl 8.2.4.2 caps cement
     excluding fly ash and GGBS, and a single binder bound cannot express that.
     """
-    raise NotImplementedError("s11_propose.space.variables — see Build_Manual_v3.md §S11")
+    raise NotImplementedError("s11_propose.space.variables — see docs/Build_Manual_v3.md §10")
 
 
 def bounds(requirement: Requirement) -> dict[str, tuple[float, float]]:
     """Return the bound on each decision variable, read from the registry and the data."""
-    raise NotImplementedError("s11_propose.space.bounds — see Build_Manual_v3.md §S11")
+    raise NotImplementedError("s11_propose.space.bounds — see docs/Build_Manual_v3.md §10")

@@ -1,7 +1,7 @@
 """Shared pytest fixtures.
 
 Stage: tests
-Spec:  Build_Manual_v3.md
+Spec:  docs/Build_Manual_v3.md
 Status: scaffold — not implemented.
 """
 

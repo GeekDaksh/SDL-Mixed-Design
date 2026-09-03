@@ -9,11 +9,11 @@ from dataclasses import dataclass
 class StrengthInput:
     """Input contract for S07."""
 
-    # TODO(s07): fields per Build_Manual_v3.md §S07
+    # TODO(s07): fields per docs/Build_Manual_v3.md §7.1
 
 
 @dataclass(frozen=True)
 class StrengthOutput:
     """Output contract for S07."""
 
-    # TODO(s07): fields per Build_Manual_v3.md §S07
+    # TODO(s07): fields per docs/Build_Manual_v3.md §7.1

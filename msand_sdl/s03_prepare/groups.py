@@ -1,7 +1,7 @@
 """The design-level grouping key.
 
 Stage: S03 PREPARE
-Spec:  Build_Manual_v3.md §S03
+Spec:  docs/Build_Manual_v3.md §7.2
 Status: scaffold — not implemented.
 """
 
@@ -15,9 +15,9 @@ if TYPE_CHECKING:
 
 def key(frame: pd.DataFrame) -> pd.Series:
     """Return the design-level group each row belongs to."""
-    raise NotImplementedError("s03_prepare.groups.key — see Build_Manual_v3.md §S03")
+    raise NotImplementedError("s03_prepare.groups.key — see docs/Build_Manual_v3.md §7.2")
 
 
 def check_disjoint(frame: pd.DataFrame) -> None:
     """Raise if one design's rows carry more than one group key."""
-    raise NotImplementedError("s03_prepare.groups.check_disjoint — see Build_Manual_v3.md §S03")
+    raise NotImplementedError("s03_prepare.groups.check_disjoint — see docs/Build_Manual_v3.md §7.2")

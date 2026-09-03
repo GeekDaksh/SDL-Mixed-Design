@@ -9,11 +9,11 @@ from dataclasses import dataclass
 class CodifyInput:
     """Input contract for S01."""
 
-    # TODO(s01): fields per Build_Manual_v3.md §S01
+    # TODO(s01): fields per docs/Build_Manual_v3.md §0
 
 
 @dataclass(frozen=True)
 class CodifyOutput:
     """Output contract for S01."""
 
-    # TODO(s01): fields per Build_Manual_v3.md §S01
+    # TODO(s01): fields per docs/Build_Manual_v3.md §0

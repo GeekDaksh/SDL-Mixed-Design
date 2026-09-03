@@ -1,7 +1,7 @@
 """Derived ratio features.
 
 Stage: S03 PREPARE
-Spec:  Build_Manual_v3.md §S03
+Spec:  docs/Build_Manual_v3.md §7.2
 Status: scaffold — not implemented.
 """
 
@@ -15,9 +15,9 @@ if TYPE_CHECKING:
 
 def derive(frame: pd.DataFrame) -> pd.DataFrame:
     """Add every derived ratio feature to the frame."""
-    raise NotImplementedError("s03_prepare.features.derive — see Build_Manual_v3.md §S03")
+    raise NotImplementedError("s03_prepare.features.derive — see docs/Build_Manual_v3.md §7.2")
 
 
 def names() -> tuple[str, ...]:
     """Return the derived feature names."""
-    raise NotImplementedError("s03_prepare.features.names — see Build_Manual_v3.md §S03")
+    raise NotImplementedError("s03_prepare.features.names — see docs/Build_Manual_v3.md §7.2")

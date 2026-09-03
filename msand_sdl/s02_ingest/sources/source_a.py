@@ -1,7 +1,7 @@
 """Loader for Source A.
 
 Stage: S02 INGEST
-Spec:  Build_Manual_v3.md §S02
+Spec:  docs/Build_Manual_v3.md §9
 Status: scaffold — not implemented.
 """
 
@@ -17,12 +17,12 @@ if TYPE_CHECKING:
 def load(path: Path) -> pd.DataFrame:
     """Read Source A as it is, without renaming or reshaping anything."""
     raise NotImplementedError(
-        "s02_ingest.sources.source_a.load — see Build_Manual_v3.md §S02"
+        "s02_ingest.sources.source_a.load — see docs/Build_Manual_v3.md §9"
     )
 
 
 def sheets(path: Path) -> tuple[str, ...]:
     """Return the sheets of this workbook that carry mix data."""
     raise NotImplementedError(
-        "s02_ingest.sources.source_a.sheets — see Build_Manual_v3.md §S02"
+        "s02_ingest.sources.source_a.sheets — see docs/Build_Manual_v3.md §9"
     )

@@ -1,7 +1,7 @@
 """Metric tables.
 
 Stage: S06 EVALUATE
-Spec:  Build_Manual_v3.md §S06
+Spec:  docs/Build_Manual_v3.md §7.1
 Status: scaffold — not implemented.
 """
 
@@ -16,9 +16,9 @@ if TYPE_CHECKING:
 
 def metric_table(results: dict[str, dict[str, float]]) -> pd.DataFrame:
     """Assemble model and baseline metrics into one table."""
-    raise NotImplementedError("s06_evaluate.report.metric_table — see Build_Manual_v3.md §S06")
+    raise NotImplementedError("s06_evaluate.report.metric_table — see docs/Build_Manual_v3.md §7.1")
 
 
 def write(table: pd.DataFrame, path: Path) -> Path:
     """Write a metric table to the report directory."""
-    raise NotImplementedError("s06_evaluate.report.write — see Build_Manual_v3.md §S06")
+    raise NotImplementedError("s06_evaluate.report.write — see docs/Build_Manual_v3.md §7.1")

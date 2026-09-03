@@ -2,7 +2,7 @@
 """Run the leave-one-design-out protocol and write the metric tables.
 
 Stage: S06 EVALUATE
-Spec:  Build_Manual_v3.md §S06
+Spec:  docs/Build_Manual_v3.md §2
 Status: scaffold — not implemented.
 """
 
@@ -13,12 +13,12 @@ import argparse
 
 def parse_args() -> argparse.Namespace:
     """Parse the command line."""
-    raise NotImplementedError("scripts.03_evaluate.parse_args — see Build_Manual_v3.md §S06")
+    raise NotImplementedError("scripts.03_evaluate.parse_args — see docs/Build_Manual_v3.md §2")
 
 
 def main() -> int:
     """Entry point."""
-    raise NotImplementedError("scripts.03_evaluate.main — see Build_Manual_v3.md §S06")
+    raise NotImplementedError("scripts.03_evaluate.main — see docs/Build_Manual_v3.md §2")
 
 
 if __name__ == "__main__":

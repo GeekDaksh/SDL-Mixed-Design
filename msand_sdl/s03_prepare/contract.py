@@ -9,11 +9,11 @@ from dataclasses import dataclass
 class PrepareInput:
     """Input contract for S03."""
 
-    # TODO(s03): fields per Build_Manual_v3.md §S03
+    # TODO(s03): fields per docs/Build_Manual_v3.md §7.2
 
 
 @dataclass(frozen=True)
 class PrepareOutput:
     """Output contract for S03."""
 
-    # TODO(s03): fields per Build_Manual_v3.md §S03
+    # TODO(s03): fields per docs/Build_Manual_v3.md §7.2

@@ -1,7 +1,7 @@
 """The classical baseline the model must beat.
 
 Stage: S08 FLOW
-Spec:  Build_Manual_v3.md §S08
+Spec:  docs/Build_Manual_v3.md §7.3
 Status: scaffold — not implemented.
 """
 
@@ -15,9 +15,9 @@ if TYPE_CHECKING:
 
 def fit(water_content: np.ndarray, workability: np.ndarray) -> Any:
     """Fit Lyse's rule to the same training rows the model saw."""
-    raise NotImplementedError("s08_flow.lyse.fit — see Build_Manual_v3.md §S08")
+    raise NotImplementedError("s08_flow.lyse.fit — see docs/Build_Manual_v3.md §7.3")
 
 
 def predict(model: Any, water_content: np.ndarray) -> np.ndarray:
     """Predict workability from the fitted classical relation."""
-    raise NotImplementedError("s08_flow.lyse.predict — see Build_Manual_v3.md §S08")
+    raise NotImplementedError("s08_flow.lyse.predict — see docs/Build_Manual_v3.md §7.3")

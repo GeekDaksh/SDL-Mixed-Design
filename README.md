@@ -55,6 +55,6 @@ placeholder naming the assertion its stage task must satisfy.
 
 ## Authority
 
-`Build_Manual_v3.md` is the authority for every engineering rule — standards values, cleaning
+`docs/Build_Manual_v3.md` is the authority for every engineering rule — standards values, cleaning
 rules, model choices and bounds. This repository defines structure only; where a module needs a
 number, it cites the clause and loads the value from the rule registry.

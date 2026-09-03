@@ -1,7 +1,7 @@
 """The single valid starting mix handed to S11.
 
 Stage: S04 DESIGN
-Spec:  Build_Manual_v3.md §S04
+Spec:  docs/Build_Manual_v3.md §3
 Status: scaffold — not implemented.
 """
 
@@ -13,4 +13,4 @@ from ..recipe import Recipe
 
 def seed(requirement: Requirement) -> Recipe:
     """Return the one deterministic IS mix the search starts from."""
-    raise NotImplementedError("s04_design.seed.seed — see Build_Manual_v3.md §S04")
+    raise NotImplementedError("s04_design.seed.seed — see docs/Build_Manual_v3.md §3")

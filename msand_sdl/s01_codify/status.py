@@ -1,7 +1,7 @@
 """VERIFIED / UNVERIFIED / CONFLICT / PROJECT_CONSTRAINT.
 
 Stage: S01 CODIFY
-Spec:  Build_Manual_v3.md §S01
+Spec:  docs/Build_Manual_v3.md §0
 Status: scaffold — not implemented.
 """
 
@@ -21,4 +21,4 @@ class Status(Enum):
 
 def may_bind(status: Status) -> bool:
     """Whether a rule of this status may be applied as a hard constraint."""
-    raise NotImplementedError("s01_codify.status.may_bind — see Build_Manual_v3.md §S01")
+    raise NotImplementedError("s01_codify.status.may_bind — see docs/Build_Manual_v3.md §0")

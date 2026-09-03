@@ -1,7 +1,7 @@
 """Record a documented special consideration.
 
 Stage: S05 VERIFY
-Spec:  Build_Manual_v3.md §S05
+Spec:  docs/Build_Manual_v3.md §5
 Status: scaffold — not implemented.
 """
 
@@ -16,14 +16,14 @@ from .outcome import CheckResult
 class Override:
     """A documented special consideration against one clause. Never silent, never default."""
 
-    # TODO(s05): fields per Build_Manual_v3.md §S05
+    # TODO(s05): fields per docs/Build_Manual_v3.md §5
 
 
 def apply(result: CheckResult, override: Override) -> CheckResult:
     """Apply a documented override to one clause verdict."""
-    raise NotImplementedError("s05_verify.override.apply — see Build_Manual_v3.md §S05")
+    raise NotImplementedError("s05_verify.override.apply — see docs/Build_Manual_v3.md §5")
 
 
 def is_documented(override: Override) -> bool:
     """Whether an override carries the justification the clause requires."""
-    raise NotImplementedError("s05_verify.override.is_documented — see Build_Manual_v3.md §S05")
+    raise NotImplementedError("s05_verify.override.is_documented — see docs/Build_Manual_v3.md §5")

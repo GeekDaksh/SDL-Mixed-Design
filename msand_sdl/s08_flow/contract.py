@@ -9,11 +9,11 @@ from dataclasses import dataclass
 class FlowInput:
     """Input contract for S08."""
 
-    # TODO(s08): fields per Build_Manual_v3.md §S08
+    # TODO(s08): fields per docs/Build_Manual_v3.md §7.3
 
 
 @dataclass(frozen=True)
 class FlowOutput:
     """Output contract for S08."""
 
-    # TODO(s08): fields per Build_Manual_v3.md §S08
+    # TODO(s08): fields per docs/Build_Manual_v3.md §7.3

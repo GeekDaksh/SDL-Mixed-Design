@@ -1,7 +1,7 @@
 """PASS / FAIL / NOT_VERIFIED / OVERRIDE_REQUIRED.
 
 Stage: S05 VERIFY
-Spec:  Build_Manual_v3.md §S05
+Spec:  docs/Build_Manual_v3.md §5
 Status: scaffold — not implemented.
 """
 
@@ -24,9 +24,9 @@ class Outcome(Enum):
 class CheckResult:
     """One clause, one verdict, and what the check saw."""
 
-    # TODO(s05): fields per Build_Manual_v3.md §S05
+    # TODO(s05): fields per docs/Build_Manual_v3.md §5
 
 
 def is_blocking(outcome: Outcome) -> bool:
     """Whether this verdict stops a mix from being proposed."""
-    raise NotImplementedError("s05_verify.outcome.is_blocking — see Build_Manual_v3.md §S05")
+    raise NotImplementedError("s05_verify.outcome.is_blocking — see docs/Build_Manual_v3.md §5")

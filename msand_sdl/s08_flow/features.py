@@ -1,7 +1,7 @@
 """The feature list.
 
 Stage: S08 FLOW
-Spec:  Build_Manual_v3.md §S08
+Spec:  docs/Build_Manual_v3.md §7.3
 Status: scaffold — not implemented.
 """
 
@@ -18,14 +18,14 @@ if TYPE_CHECKING:
 
 def names() -> tuple[str, ...]:
     """Return the workability model's features, in the order the model expects them."""
-    raise NotImplementedError("s08_flow.features.names — see Build_Manual_v3.md §S08")
+    raise NotImplementedError("s08_flow.features.names — see docs/Build_Manual_v3.md §7.3")
 
 
 def build(frame: pd.DataFrame) -> pd.DataFrame:
     """Build the feature matrix from a prepared dataset."""
-    raise NotImplementedError("s08_flow.features.build — see Build_Manual_v3.md §S08")
+    raise NotImplementedError("s08_flow.features.build — see docs/Build_Manual_v3.md §7.3")
 
 
 def from_recipe(recipe: Recipe) -> np.ndarray:
     """Build one feature row from a recipe."""
-    raise NotImplementedError("s08_flow.features.from_recipe — see Build_Manual_v3.md §S08")
+    raise NotImplementedError("s08_flow.features.from_recipe — see docs/Build_Manual_v3.md §7.3")

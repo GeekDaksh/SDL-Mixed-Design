@@ -1,7 +1,7 @@
 """Reject a source that fails a concrete-physics check.
 
 Stage: S02 INGEST
-Spec:  Build_Manual_v3.md §S02
+Spec:  docs/Build_Manual_v3.md §9
 Status: scaffold — not implemented.
 """
 
@@ -18,14 +18,14 @@ if TYPE_CHECKING:
 class AuditReport:
     """The outcome of auditing one source against concrete physics."""
 
-    # TODO(s02): fields per Build_Manual_v3.md §S02
+    # TODO(s02): fields per docs/Build_Manual_v3.md §9
 
 
 def audit(frame: pd.DataFrame, source: str) -> AuditReport:
     """Audit one harmonised source against every physics check."""
-    raise NotImplementedError("s02_ingest.physics_audit.audit — see Build_Manual_v3.md §S02")
+    raise NotImplementedError("s02_ingest.physics_audit.audit — see docs/Build_Manual_v3.md §9")
 
 
 def admits(report: AuditReport) -> bool:
     """Whether a source may enter the raw table."""
-    raise NotImplementedError("s02_ingest.physics_audit.admits — see Build_Manual_v3.md §S02")
+    raise NotImplementedError("s02_ingest.physics_audit.admits — see docs/Build_Manual_v3.md §9")

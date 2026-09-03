@@ -1,7 +1,7 @@
 """The grade ceiling above which a nominal mix is not permitted.
 
 Stage: S05 VERIFY
-Spec:  Build_Manual_v3.md §S05
+Spec:  docs/Build_Manual_v3.md §5
 Status: scaffold — not implemented.
 """
 
@@ -18,12 +18,12 @@ CLAUSE = "IS 456 Table 9"
 def check(recipe: Recipe, rules: dict[str, Rule]) -> CheckResult:
     """Verify one mix against IS 456 Table 9. The limit is read from the registry, never inlined."""
     raise NotImplementedError(
-        "s05_verify.checks.nominal_limit.check — see Build_Manual_v3.md §S05"
+        "s05_verify.checks.nominal_limit.check — see docs/Build_Manual_v3.md §5"
     )
 
 
 def counter_example() -> Recipe:
     """Return a mix this check must fail. A check that cannot fail is vacuous."""
     raise NotImplementedError(
-        "s05_verify.checks.nominal_limit.counter_example — see Build_Manual_v3.md §S05"
+        "s05_verify.checks.nominal_limit.counter_example — see docs/Build_Manual_v3.md §5"
     )

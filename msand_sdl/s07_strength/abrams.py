@@ -1,7 +1,7 @@
 """The classical baseline the model must beat.
 
 Stage: S07 STRENGTH
-Spec:  Build_Manual_v3.md §S07
+Spec:  docs/Build_Manual_v3.md §7.1
 Status: scaffold — not implemented.
 """
 
@@ -15,9 +15,9 @@ if TYPE_CHECKING:
 
 def fit(water_cementitious_ratio: np.ndarray, strength: np.ndarray) -> Any:
     """Fit Abrams' law to the same training rows the model saw."""
-    raise NotImplementedError("s07_strength.abrams.fit — see Build_Manual_v3.md §S07")
+    raise NotImplementedError("s07_strength.abrams.fit — see docs/Build_Manual_v3.md §7.1")
 
 
 def predict(model: Any, water_cementitious_ratio: np.ndarray) -> np.ndarray:
     """Predict strength from the fitted classical relation."""
-    raise NotImplementedError("s07_strength.abrams.predict — see Build_Manual_v3.md §S07")
+    raise NotImplementedError("s07_strength.abrams.predict — see docs/Build_Manual_v3.md §7.1")

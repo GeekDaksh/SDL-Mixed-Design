@@ -11,7 +11,7 @@ from enum import Enum
 
 
 class Domain(Enum):
-    """Grade domain — decides which IS 10262 route applies. Build_Manual_v3.md §1."""
+    """Grade domain — decides which IS 10262 route applies. docs/Build_Manual_v3.md §1."""
 
     NOMINAL = "A"
     ORDINARY = "B"
@@ -52,7 +52,7 @@ class Provenance(Enum):
 class Requirement:
     """What a customer asks for. Input to S04 and S11."""
 
-    # TODO(contracts): fields per Build_Manual_v3.md §2
+    # TODO(contracts): fields per docs/Build_Manual_v3.md §2
 
 
 @dataclass(frozen=True)

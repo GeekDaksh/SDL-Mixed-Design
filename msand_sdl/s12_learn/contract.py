@@ -9,11 +9,11 @@ from dataclasses import dataclass
 class LearnInput:
     """Input contract for S12."""
 
-    # TODO(s12): fields per Build_Manual_v3.md §S12
+    # TODO(s12): fields per docs/Build_Manual_v3.md §10
 
 
 @dataclass(frozen=True)
 class LearnOutput:
     """Output contract for S12."""
 
-    # TODO(s12): fields per Build_Manual_v3.md §S12
+    # TODO(s12): fields per docs/Build_Manual_v3.md §10
