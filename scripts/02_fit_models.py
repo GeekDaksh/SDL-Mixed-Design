@@ -13,7 +13,9 @@ import argparse
 
 def parse_args() -> argparse.Namespace:
     """Parse the command line."""
-    raise NotImplementedError("scripts.02_fit_models.parse_args — see docs/Build_Manual_v3.md §2, §2")
+    raise NotImplementedError(
+        "scripts.02_fit_models.parse_args — see docs/Build_Manual_v3.md §2, §2"
+    )
 
 
 def main() -> int:

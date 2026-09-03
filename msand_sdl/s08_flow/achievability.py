@@ -21,7 +21,9 @@ def is_achievable(model: Any, requirement: Requirement) -> bool:
 
 def band_width(requirement: Requirement) -> float:
     """Return the width of the requested workability band."""
-    raise NotImplementedError("s08_flow.achievability.band_width — see docs/Build_Manual_v3.md §7.3")
+    raise NotImplementedError(
+        "s08_flow.achievability.band_width — see docs/Build_Manual_v3.md §7.3"
+    )
 
 
 def check(model: Any, requirement: Requirement) -> None:
@@ -31,4 +33,6 @@ def check(model: Any, requirement: Requirement) -> None:
 
 def resolution(prediction: Prediction) -> float:
     """Return the finest band this prediction can distinguish."""
-    raise NotImplementedError("s08_flow.achievability.resolution — see docs/Build_Manual_v3.md §7.3")
+    raise NotImplementedError(
+        "s08_flow.achievability.resolution — see docs/Build_Manual_v3.md §7.3"
+    )

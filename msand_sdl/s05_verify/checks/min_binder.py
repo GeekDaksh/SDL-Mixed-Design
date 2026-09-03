@@ -11,7 +11,6 @@ from ...recipe import Recipe
 from ...s01_codify.rule import Rule
 from ..outcome import CheckResult
 
-
 CLAUSE = "IS 456 Table 5"
 
 

@@ -26,4 +26,6 @@ def design_id(frame: pd.DataFrame, source: str) -> pd.Series:
 
 def check_complete(frame: pd.DataFrame) -> None:
     """Raise if any row reaches the raw table without full provenance."""
-    raise NotImplementedError("s02_ingest.provenance.check_complete — see docs/Build_Manual_v3.md §9")
+    raise NotImplementedError(
+        "s02_ingest.provenance.check_complete — see docs/Build_Manual_v3.md §9"
+    )

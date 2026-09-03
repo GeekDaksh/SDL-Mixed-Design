@@ -20,9 +20,13 @@ def target(frame: pd.DataFrame) -> pd.Series:
 
 def reference_water(frame: pd.DataFrame) -> pd.Series:
     """Return the reference water content each observation is expressed against."""
-    raise NotImplementedError("s08_flow.delta_water.reference_water — see docs/Build_Manual_v3.md §7.3")
+    raise NotImplementedError(
+        "s08_flow.delta_water.reference_water — see docs/Build_Manual_v3.md §7.3"
+    )
 
 
 def to_workability(delta: pd.Series, reference: pd.Series) -> pd.Series:
     """Map a water-demand prediction back onto the reported workability scale."""
-    raise NotImplementedError("s08_flow.delta_water.to_workability — see docs/Build_Manual_v3.md §7.3")
+    raise NotImplementedError(
+        "s08_flow.delta_water.to_workability — see docs/Build_Manual_v3.md §7.3"
+    )

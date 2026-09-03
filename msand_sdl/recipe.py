@@ -19,7 +19,9 @@ class Recipe:
 
 def constituent_masses(recipe: Recipe) -> dict[str, float]:
     """Return every constituent of the recipe keyed by name."""
-    raise NotImplementedError("msand_sdl.recipe.constituent_masses — see docs/Build_Manual_v3.md §2")
+    raise NotImplementedError(
+        "msand_sdl.recipe.constituent_masses — see docs/Build_Manual_v3.md §2"
+    )
 
 
 def water_cementitious_ratio(recipe: Recipe) -> float:

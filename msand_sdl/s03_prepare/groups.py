@@ -20,4 +20,6 @@ def key(frame: pd.DataFrame) -> pd.Series:
 
 def check_disjoint(frame: pd.DataFrame) -> None:
     """Raise if one design's rows carry more than one group key."""
-    raise NotImplementedError("s03_prepare.groups.check_disjoint — see docs/Build_Manual_v3.md §7.2")
+    raise NotImplementedError(
+        "s03_prepare.groups.check_disjoint — see docs/Build_Manual_v3.md §7.2"
+    )

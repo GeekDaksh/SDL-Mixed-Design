@@ -18,4 +18,6 @@ def proportions(requirement: Requirement) -> Recipe:
 
 def is_permissible(requirement: Requirement) -> bool:
     """Whether IS 456 permits a nominal mix here at all."""
-    raise NotImplementedError("s04_design.nominal.is_permissible — see docs/Build_Manual_v3.md §1.1")
+    raise NotImplementedError(
+        "s04_design.nominal.is_permissible — see docs/Build_Manual_v3.md §1.1"
+    )

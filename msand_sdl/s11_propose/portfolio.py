@@ -10,7 +10,11 @@ from __future__ import annotations
 from ..recipe import Recipe
 
 
-def front(candidates: tuple[Recipe, ...], cost: dict[str, float], carbon: dict[str, float]) -> tuple[Recipe, ...]:
+def front(
+    candidates: tuple[Recipe, ...],
+    cost: dict[str, float],
+    carbon: dict[str, float],
+) -> tuple[Recipe, ...]:
     """Return the non-dominated candidates on the cost and carbon objectives."""
     raise NotImplementedError("s11_propose.portfolio.front — see docs/Build_Manual_v3.md §10")
 

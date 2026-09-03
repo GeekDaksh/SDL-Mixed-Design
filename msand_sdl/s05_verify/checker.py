@@ -18,7 +18,10 @@ def checks() -> tuple[str, ...]:
 
 
 def run_all(recipe: Recipe, rules: dict[str, Rule]) -> tuple[CheckResult, ...]:
-    """Run every check against a mix. This stage recomputes; it never trusts a design's own numbers."""
+    """Run every check against a mix.
+
+    This stage recomputes; it never trusts a design's own numbers.
+    """
     raise NotImplementedError("s05_verify.checker.run_all — see docs/Build_Manual_v3.md §5")
 
 

@@ -24,4 +24,6 @@ def total_volume(recipe: Recipe, specific_gravities: dict[str, float]) -> float:
 
 def residual(recipe: Recipe, specific_gravities: dict[str, float]) -> float:
     """Return the signed volume by which a recipe fails to close."""
-    raise NotImplementedError("s04_design.absolute_volume.residual — see docs/Build_Manual_v3.md §3.1")
+    raise NotImplementedError(
+        "s04_design.absolute_volume.residual — see docs/Build_Manual_v3.md §3.1"
+    )

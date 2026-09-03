@@ -37,8 +37,15 @@ target-version = "py311"
 select = ["E", "F", "I", "UP", "B"]
 
 [tool.mypy]
-python_version = "3.11"
+# No python_version pin: it is checked against the running interpreter. Pinning to 3.11
+# makes mypy reject numpy's own stubs, which use 3.12+ type syntax. The >=3.11 floor is
+# declared in [project] and is what CI should matrix over.
 strict = true
+
+[[tool.mypy.overrides]]
+# Neither ships type information; both are annotation-only imports in this tree.
+module = ["pandas.*", "yaml.*"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

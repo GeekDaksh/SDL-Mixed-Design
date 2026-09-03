@@ -7,5 +7,8 @@ import pytest
 
 @pytest.mark.skip(reason="scaffold — implemented in the S04 task")
 def test_m65_cannot_reach_section2() -> None:
-    """M65 routes to the cl 6 chain; the Fig 1 path must be structurally unreachable. docs/Build_Manual_v3.md §1."""
+    """M65 routes to the cl 6 chain; the Fig 1 path must be structurally unreachable.
+
+    Spec: docs/Build_Manual_v3.md §1
+    """
     raise NotImplementedError

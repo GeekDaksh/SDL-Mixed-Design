@@ -28,4 +28,6 @@ def build(frame: pd.DataFrame) -> pd.DataFrame:
 
 def from_recipe(recipe: Recipe, age_days: float) -> np.ndarray:
     """Build one feature row from a recipe at a test age."""
-    raise NotImplementedError("s07_strength.features.from_recipe — see docs/Build_Manual_v3.md §7.1")
+    raise NotImplementedError(
+        "s07_strength.features.from_recipe — see docs/Build_Manual_v3.md §7.1"
+    )

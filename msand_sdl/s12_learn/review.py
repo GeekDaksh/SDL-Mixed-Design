@@ -23,4 +23,6 @@ def reasons() -> tuple[RejectionReason, ...]:
 
 def is_model_relevant(reason: RejectionReason) -> bool:
     """Whether this rejection tells the model something, or only the operator."""
-    raise NotImplementedError("s12_learn.review.is_model_relevant — see docs/Build_Manual_v3.md §10")
+    raise NotImplementedError(
+        "s12_learn.review.is_model_relevant — see docs/Build_Manual_v3.md §10"
+    )

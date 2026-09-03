@@ -29,7 +29,9 @@ def water_cementitious_ratio(requirement: Requirement) -> float:
 
 def water_content(requirement: Requirement) -> float:
     """Select the water content for the cl 6 route."""
-    raise NotImplementedError("s04_design.section3.water_content — see docs/Build_Manual_v3.md §3.2")
+    raise NotImplementedError(
+        "s04_design.section3.water_content — see docs/Build_Manual_v3.md §3.2"
+    )
 
 
 def cementitious_content(requirement: Requirement) -> float:

@@ -9,7 +9,6 @@ from __future__ import annotations
 
 from ..contracts import Requirement
 from ..recipe import Recipe
-from . import fig1
 
 
 def design(requirement: Requirement) -> Recipe:
@@ -26,7 +25,9 @@ def water_cementitious_ratio(requirement: Requirement) -> float:
 
 def water_content(requirement: Requirement) -> float:
     """Select the water content for the cl 5 route and correct it for the requested workability."""
-    raise NotImplementedError("s04_design.section2.water_content — see docs/Build_Manual_v3.md §3.1")
+    raise NotImplementedError(
+        "s04_design.section2.water_content — see docs/Build_Manual_v3.md §3.1"
+    )
 
 
 def coarse_aggregate_fraction(requirement: Requirement) -> float:

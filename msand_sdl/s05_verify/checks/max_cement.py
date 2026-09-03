@@ -11,12 +11,14 @@ from ...recipe import Recipe
 from ...s01_codify.rule import Rule
 from ..outcome import CheckResult
 
-
 CLAUSE = "IS 456 cl 8.2.4.2"
 
 
 def check(recipe: Recipe, rules: dict[str, Rule]) -> CheckResult:
-    """Verify one mix against IS 456 cl 8.2.4.2. The limit is read from the registry, never inlined."""
+    """Verify one mix against IS 456 cl 8.2.4.2.
+
+    The limit is read from the registry, never inlined.
+    """
     raise NotImplementedError(
         "s05_verify.checks.max_cement.check — see docs/Build_Manual_v3.md §5.1"
     )

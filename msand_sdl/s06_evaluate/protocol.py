@@ -21,4 +21,6 @@ def splits(frame: pd.DataFrame) -> Iterator[tuple[pd.Index, pd.Index]]:
 
 def check_disjoint(train: pd.Index, test: pd.Index, frame: pd.DataFrame) -> None:
     """Raise if any design appears on both sides of a split."""
-    raise NotImplementedError("s06_evaluate.protocol.check_disjoint — see docs/Build_Manual_v3.md §7.1")
+    raise NotImplementedError(
+        "s06_evaluate.protocol.check_disjoint — see docs/Build_Manual_v3.md §7.1"
+    )

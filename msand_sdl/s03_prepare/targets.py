@@ -15,7 +15,9 @@ if TYPE_CHECKING:
 
 def strength_long(frame: pd.DataFrame) -> pd.DataFrame:
     """Return the strength dataset in long form, one row per specimen age."""
-    raise NotImplementedError("s03_prepare.targets.strength_long — see docs/Build_Manual_v3.md §7.2")
+    raise NotImplementedError(
+        "s03_prepare.targets.strength_long — see docs/Build_Manual_v3.md §7.2"
+    )
 
 
 def workability(frame: pd.DataFrame) -> pd.DataFrame:

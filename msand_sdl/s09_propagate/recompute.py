@@ -12,12 +12,16 @@ from ..recipe import Recipe
 
 def apply_change(recipe: Recipe, variable: str, value: float) -> Recipe:
     """Change one variable and recompute every quantity that depends on it."""
-    raise NotImplementedError("s09_propagate.recompute.apply_change — see docs/Build_Manual_v3.md §7.4")
+    raise NotImplementedError(
+        "s09_propagate.recompute.apply_change — see docs/Build_Manual_v3.md §7.4"
+    )
 
 
 def dependents(variable: str) -> tuple[str, ...]:
     """Return every quantity downstream of this variable in the design chain."""
-    raise NotImplementedError("s09_propagate.recompute.dependents — see docs/Build_Manual_v3.md §7.4")
+    raise NotImplementedError(
+        "s09_propagate.recompute.dependents — see docs/Build_Manual_v3.md §7.4"
+    )
 
 
 def order() -> tuple[str, ...]:

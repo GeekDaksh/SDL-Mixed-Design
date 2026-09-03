@@ -29,4 +29,6 @@ def reject_outside(
     envelope: dict[str, tuple[float, float]], candidates: tuple[Recipe, ...]
 ) -> tuple[Recipe, ...]:
     """Drop every candidate the models would have to extrapolate to score."""
-    raise NotImplementedError("s11_propose.envelope.reject_outside — see docs/Build_Manual_v3.md §10")
+    raise NotImplementedError(
+        "s11_propose.envelope.reject_outside — see docs/Build_Manual_v3.md §10"
+    )
