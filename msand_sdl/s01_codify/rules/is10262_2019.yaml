@@ -1,5 +1,677 @@
 standard: IS 10262
 year: 2019
+title: Concrete Mix Proportioning — Guidelines
+revision: Second Revision
 source_file: standards/is10262_2019.pdf
+library_file: IS_codes/IS-10262-2019.pdf
 source_sha256: null      # written by scripts/00_freeze_standards.py
-rules: []                # populated in the S01 implementation task
+read_from_primary: true  # docs/Build_Manual_v3.md §0.1
+
+caveats:
+  - id: edition_confirmed
+    tag: V
+    manual_ref: "§0.3"
+    text: >-
+      Title page confirmed: IS 10262 : 2019, Concrete Mix Proportioning — Guidelines
+      (Second Revision), January 2019. This is the edition the manual's §0.1 clause list
+      was read from.
+
+rules:
+
+  # ------------------------------------------------------------------ scope
+
+  - id: is10262.cl_1_2.scope
+    clause: cl 1.2
+    title: Scope — ordinary, standard and high strength grades
+    tag: IS
+    kind: statement
+    role: input
+    value: >-
+      The standard covers ordinary, standard and high strength grades, plus self-compacting
+      concrete and mass concrete.
+    manual_ref: "§1"
+    notes:
+      - >-
+        The declared M5-M65 range is not one design problem. It is three, and they use
+        different clauses — see is10262.domains.routing.
+
+  - id: is10262.cl_1_3.is456_applies
+    clause: cl 1.3
+    title: IS 456 requirements form part of this standard
+    tag: IS
+    kind: statement
+    role: constraint
+    value: >-
+      "All requirements of IS 456 in so far as they apply, shall be deemed to form part of
+      this standard."
+    manual_ref: "§1"
+
+  - id: is10262.domains.routing
+    clause: cl 1.2, cl 6; IS 456 cl 9.1.1
+    title: Three grade domains, three different clause chains
+    tag: EI
+    kind: table
+    role: procedure
+    key: [domain]
+    manual_ref: "§1"
+    value:
+      - domain: A
+        name: nominal_lean
+        grades: M5, M7.5, and M10-M20 where IS 456 cl 9.1.1 applies
+        route: IS 456 Table 9 nominal mix proportions, no design mix
+      - domain: B
+        name: ordinary_standard
+        grades: M10 to M60
+        route: IS 10262 Section 2 — cl 5, Fig 1, Table 4, Table 5
+      - domain: C
+        name: high_strength
+        grades: M65 and above
+        route: IS 10262 Section 3 — cl 6, Table 8, Table 7, Table 6, Table 10
+    notes:
+      - >-
+        Routing happens before anything else runs. M65 reaching the Fig 1 path is the
+        serious defect of the previous engine (§8.1) — a 26 percent error in w/cm that
+        propagates straight into binder.
+
+  # ------------------------------------------------------------------ inputs
+
+  - id: is10262.cl_4_1.required_inputs
+    clause: cl 4.1
+    title: What mix proportioning actually requires
+    tag: IS
+    kind: statement
+    role: input
+    manual_ref: "§2"
+    value:
+      - (a) grade designation
+      - (b) type and grade of cement
+      - (c) maximum nominal size of aggregate
+      - (d) minimum cementitious content and maximum w/c, or exposure per IS 456 Tables 3 and 5
+      - (e) workability at placement
+      - (f) transportation time
+      - (g) method of placing
+      - (h) degree of site control or established standard deviation
+      - (j) type of coarse aggregate
+      - (k) type of fine aggregate
+      - (m) maximum cement content
+      - (n) chemical admixture
+      - (p) mineral admixture
+      - (q) other requirements
+    notes:
+      - >-
+        The client supplies grade and target slump, which cover (a) and (e) only. Fourteen
+        of the seventeen inputs the standard names are not derivable from them. Every one
+        must be surfaced as ASSUMED with its default stated, never silently filled. That is
+        the honest form of "two inputs in".
+
+  # ------------------------------------------------------------------ target mean
+
+  - id: is10262.cl_4_2.target_mean_strength
+    clause: cl 4.2
+    title: Target mean strength = max(fck + 1.65 S, fck + X)
+    tag: IS
+    kind: formula
+    role: procedure
+    value: "f_target = max(fck + 1.65 * S, fck + X)"
+    unit: N/mm2
+    manual_ref: "§2.1 and §3.1"
+    conflicts_with:
+      - is456.cl_9_2_2.target_mean_strength
+    notes:
+      - >-
+        IS 456 cl 9.2.2 states fck + 1.65 S alone. This clause is the later, more specific
+        and stricter statement. The declared resolution is is10262.pc.target_mean_resolution.
+
+  - id: is10262.pc.target_mean_resolution
+    clause: cl 4.2 vs IS 456 cl 9.2.2
+    title: Declared resolution of the target-mean conflict — take the maximum
+    tag: PC
+    kind: formula
+    role: procedure
+    value: "f_target = max(fck + 1.65 * S, fck + X)"
+    unit: N/mm2
+    manual_ref: "§2.1"
+    notes:
+      - >-
+        Recorded as an interpretation, not as a clause. IS 10262 is the later, more specific
+        mix-proportioning document and its formula is the stricter of the two, so taking the
+        maximum satisfies both.
+
+  - id: is10262.table_1.x_factor
+    clause: Table 1 (cl 4.2)
+    title: X factor by grade
+    tag: IS
+    kind: table
+    role: input
+    key: [grade]
+    unit: N/mm2
+    complete: false
+    manual_ref: "§2 and §9 item 12"
+    value: []
+    notes:
+      - >-
+        Table 1 starts at M10. Below that the standard publishes no X, which is why M5 and
+        M7.5 have no design-mix route (§1.1).
+      - >-
+        The manual does not print this table. The one value implied by its arithmetic is
+        X = 6.5 at M30 (§9 item 12 computes fck + X = 36.5 for M30), but a value inferred
+        from a worked example is not a codified table and is not entered here.
+    next_action: >-
+      Read Table 1 from standards/is10262_2019.pdf and populate every row. Until then, any
+      target-mean computation that needs X will raise MissingTableRow rather than guess.
+
+  - id: is10262.table_2.assumed_standard_deviation
+    clause: Table 2 (cl 4.2.1.3)
+    title: Assumed standard deviation by grade
+    tag: IS
+    kind: table
+    role: input
+    key: [grade]
+    unit: N/mm2
+    complete: false
+    manual_ref: "§9 item 12"
+    value:
+      - {grade: M20, assumed_s: 4.0}
+      - {grade: M25, assumed_s: 4.0}
+      - {grade: M30, assumed_s: 5.0}
+      - {grade: M35, assumed_s: 5.0}
+      - {grade: M40, assumed_s: 5.0}
+    notes:
+      - >-
+        Table 2 starts at M10. Only the five rows above are stated in the manual, in the
+        §9 item 12 comparison against established standard deviations. The remaining rows
+        are not codified.
+      - >-
+        Note 1 — the tabulated values assume good site control. For fair control, add
+        1 N/mm2.
+    next_action: >-
+      Read the full Table 2 from standards/is10262_2019.pdf, including the rows below M20
+      and above M40, and confirm the five rows above.
+
+  - id: is10262.cl_4_2_1_1.established_standard_deviation
+    clause: cl 4.2.1.1
+    title: Established standard deviation requires not less than 30 test results
+    tag: IS
+    kind: scalar
+    role: constraint
+    value: 30
+    unit: test results
+    manual_ref: "§2.1 and §9 item 12"
+    notes:
+      - >-
+        Recalculated after every change of mix proportioning, and checked monthly.
+      - >-
+        This clause is what makes data/meet/Data_Compiled.xlsx uniquely valuable: four of
+        its five designs reach 30 results, and every established S comes in below the
+        Table 2 assumed value. A lower target mean permits a higher w/c, hence less binder —
+        the project's objective reached through a clause rather than a model.
+
+  - id: is10262.cl_4_2_1_3.assumed_in_first_instance
+    clause: cl 4.2.1.3
+    title: Table 2 may be assumed where sufficient results are not available
+    tag: IS
+    kind: statement
+    role: procedure
+    value: >-
+      Where sufficient test results are not available, the Table 2 standard deviation may be
+      assumed in the first instance, and replaced by the actual value as soon as results exist.
+    manual_ref: "§2.1"
+
+  # ------------------------------------------------------------------ Section 2, domain B
+
+  - id: is10262.cl_5_1.fig1_water_cement_ratio
+    clause: cl 5.1 (Fig 1)
+    title: Free w/c against 28-day strength — three curves
+    tag: IS
+    kind: statement
+    role: procedure
+    manual_ref: "§4"
+    value: >-
+      Fig 1 gives the free water-cement ratio against 28-day strength as three curves:
+      Curve 1 for expected 28-day cement strength >=33 and <43 N/mm2; Curve 2 for >=43 and
+      <53; Curve 3 for >=53 and above.
+    notes:
+      - >-
+        Note 1 — absent actual cement strength data, curves 1, 2, 3 may be used for OPC 33,
+        OPC 43, OPC 53 respectively.
+      - >-
+        Note 2 — for PPC/PSC use the curve matching actual strength; absent that data,
+        curve 2 may be used.
+      - >-
+        cl 5.1 — "the relationship between strength and free water-cement ratio should
+        preferably be established for the materials actually to be used." Fitting Abrams to
+        our own trials is the standard asking for it, not a shortcut around it.
+
+  - id: is10262.fig1.anchor_points
+    clause: Annex A-5, Annex F-5 (Fig 1, Curve 2)
+    title: Published anchor points on Curve 2 (OPC 43)
+    tag: IS
+    kind: table
+    role: input
+    key: [annex]
+    unit: target N/mm2; w/c ratio
+    manual_ref: "§4"
+    value:
+      - {annex: A-5, target_strength: 48.25, water_cement_ratio: 0.36}
+      - {annex: F-5, target_strength: 20.77, water_cement_ratio: 0.61}
+    notes:
+      - >-
+        These are the standard's own worked values, and the only exact points on Fig 1 that
+        the annexes publish. Curves 1 (OPC 33) and 3 (OPC 53) have no verified anchor points
+        anywhere in the annexes.
+
+  - id: is10262.pc.fig1_abrams_fit
+    clause: Fig 1, fitted
+    title: Two-point Abrams fit to Curve 2, and its validity band
+    tag: PC
+    kind: formula
+    role: procedure
+    value: "ln(f) = 5.0902 - 3.3715 * (w/c)"
+    manual_ref: "§4 and §4.1"
+    notes:
+      - >-
+        b = (ln 48.25 - ln 20.77) / (0.61 - 0.36) = 3.3715; a = ln 48.25 + 3.3715 * 0.36 =
+        5.0902. The fit reproduces both published anchors exactly.
+      - >-
+        Anchored at w/c 0.36 and 0.61 and validated only between them. M40 sits at the lower
+        anchor; M45-M60 fall below it and every such output must be flagged as extrapolated.
+        M65 and above must not use Fig 1 at all — Table 8 applies.
+      - >-
+        Falling back to Curve 2 for OPC 33 and OPC 53 is a project approximation and must be
+        labelled as one. Fig 1 Note 2 permits the fallback for PPC/PSC without strength data
+        only; it says nothing about substituting for OPC 33 or OPC 53 (§8.5).
+    next_action: >-
+      Either read four or five more points off the printed Fig 1 to extend the band below
+      w/c 0.36, or mark every domain-B output below 0.36 as extrapolated. Do not do neither.
+
+  - id: is10262.cl_5_1_1.durability_cap
+    clause: cl 5.1.1
+    title: Take the lower of the Fig 1 w/c and the IS 456 Table 5 durability cap
+    tag: IS
+    kind: statement
+    role: constraint
+    value: >-
+      The free water-cement ratio selected from Fig 1 shall be checked against the maximum
+      permitted for the exposure condition, and the lower of the two adopted.
+    manual_ref: "§3.1"
+
+  - id: is10262.cl_5_1_2.wcm_with_scm
+    clause: cl 5.1.2
+    title: Where SCM is used, work in w/cm per IS 456 Table 5
+    tag: IS
+    kind: statement
+    role: procedure
+    value: >-
+      Where supplementary cementitious material is used, the ratio is worked as free water
+      to total cementitious material, per IS 456 Table 5.
+    manual_ref: "§3.1"
+
+  - id: is10262.table_3.entrapped_air
+    clause: Table 3 (cl 5.2)
+    title: Approximate entrapped air content, domain B
+    tag: IS
+    kind: table
+    role: input
+    key: [msa_mm]
+    unit: percent of concrete volume
+    manual_ref: "§3.1"
+    value:
+      - {msa_mm: 10, entrapped_air_pct: 1.5}
+      - {msa_mm: 20, entrapped_air_pct: 1.0}
+      - {msa_mm: 40, entrapped_air_pct: 0.8}
+
+  - id: is10262.table_4.water_content
+    clause: Table 4 (cl 5.3)
+    title: Maximum water content per cubic metre, domain B
+    tag: IS
+    kind: table
+    role: input
+    key: [msa_mm]
+    unit: kg/m3
+    applies_to: 50 mm slump, angular coarse aggregate, saturated surface dry
+    manual_ref: "§3.1"
+    value:
+      - {msa_mm: 10, water_kg_per_m3: 208}
+      - {msa_mm: 20, water_kg_per_m3: 186}
+      - {msa_mm: 40, water_kg_per_m3: 165}
+
+  - id: is10262.cl_5_3.water_corrections
+    clause: cl 5.3
+    title: Corrections to the Table 4 water content
+    tag: IS
+    kind: table
+    role: procedure
+    key: [correction]
+    unit: percent, except shape which is kg/m3
+    manual_ref: "§3.1"
+    value:
+      - {correction: shape_sub_angular, adjustment: -10, unit: kg/m3}
+      - {correction: shape_gravel_some_crushed, adjustment: -15, unit: kg/m3}
+      - {correction: shape_rounded_gravel, adjustment: -20, unit: kg/m3}
+      - {correction: slump_per_25mm_from_50mm, adjustment: 3, unit: percent}
+      - {correction: water_reducer, adjustment_min: -5, adjustment_max: -10, unit: percent}
+      - {correction: superplasticiser, adjustment_min: -20, adjustment_max: -30, unit: percent}
+    notes:
+      - >-
+        Slump correction is plus or minus 3 percent per 25 mm of slump away from the 50 mm
+        Table 4 basis.
+      - >-
+        Superplasticiser reduction is "20 to 30 percent and above" — the upper figure is not
+        a ceiling.
+      - >-
+        cl 5.3 requires the water content to be established by trial. This is the standard's
+        own endorsement of modelling water demand rather than slump (§7.3).
+
+  - id: is10262.cl_5_4_1.cementitious_content
+    clause: cl 5.4.1
+    title: Cementitious content from water and w/c, then checked against IS 456
+    tag: IS
+    kind: statement
+    role: procedure
+    manual_ref: "§3.1"
+    value: "cementitious = water / (w/c or w/cm)"
+    notes:
+      - >-
+        Where fly ash is 20 percent or more of cementitious, an increase may be warranted:
+        raise cementitious by 10 percent for the preliminary trial, then RECALCULATE the
+        w/cm at the new content.
+      - >-
+        Check the result against the IS 456 minimum cementitious content and adopt the
+        greater. Check it against the IS 456 maximum cement content separately — the maximum
+        applies to cement, the minimum to cementitious.
+
+  - id: is10262.table_5.coarse_aggregate_volume
+    clause: Table 5 (cl 5.5)
+    title: Coarse aggregate volume per unit volume of total aggregate, at w/c 0.50
+    tag: IS
+    kind: table
+    role: input
+    key: [msa_mm, zone]
+    unit: volume fraction of total aggregate
+    manual_ref: "§3.1 and §6.1"
+    value:
+      - {msa_mm: 10, zone: IV,  ca_volume_fraction: 0.54}
+      - {msa_mm: 10, zone: III, ca_volume_fraction: 0.52}
+      - {msa_mm: 10, zone: II,  ca_volume_fraction: 0.50}
+      - {msa_mm: 10, zone: I,   ca_volume_fraction: 0.48}
+      - {msa_mm: 20, zone: IV,  ca_volume_fraction: 0.66}
+      - {msa_mm: 20, zone: III, ca_volume_fraction: 0.64}
+      - {msa_mm: 20, zone: II,  ca_volume_fraction: 0.62}
+      - {msa_mm: 20, zone: I,   ca_volume_fraction: 0.60}
+      - {msa_mm: 40, zone: IV,  ca_volume_fraction: 0.73}
+      - {msa_mm: 40, zone: III, ca_volume_fraction: 0.72}
+      - {msa_mm: 40, zone: II,  ca_volume_fraction: 0.71}
+      - {msa_mm: 40, zone: I,   ca_volume_fraction: 0.69}
+    caveats:
+      - >-
+        The printed table runs Zone IV, III, II, I — RIGHT TO LEFT. Reading the columns left
+        to right reverses every row. The previous engine did exactly that and produced a CA
+        volume of 0.668 where Annex A publishes 0.648; every other number looked fine, and
+        without the Annex A test it would have shipped with the wrong sand-to-stone ratio in
+        every mix (§6.1). The rows above are keyed by zone, not by column position, so the
+        ordering cannot be silently inherited.
+    notes:
+      - >-
+        Note 3 — for crushed or mixed sand, less fine aggregate is normally needed and the
+        coarse aggregate volume shall be suitably increased. This is the standard's own hook
+        for the M-sand correction.
+      - >-
+        Note 4 — fine aggregate of Zone IV shall not be used in reinforced concrete unless
+        tests establish suitability.
+
+  - id: is10262.cl_5_5_1.ca_volume_wc_adjustment
+    clause: cl 5.5.1
+    title: Adjust the Table 5 coarse aggregate volume for w/c away from 0.50
+    tag: IS
+    kind: formula
+    role: procedure
+    value: "delta_ca_volume = -0.01 * (w/c - 0.50) / 0.05"
+    manual_ref: "§3.1"
+    notes:
+      - "Plus 0.01 per 0.05 DECREASE in w/c; minus 0.01 per 0.05 INCREASE in w/c."
+
+  - id: is10262.cl_5_5_2.pumpable_reduction_domain_b
+    clause: cl 5.5.2
+    title: Pumpable or congested placement — reduce coarse aggregate volume, domain B
+    tag: IS
+    kind: scalar
+    role: procedure
+    value: 10
+    unit: percent, maximum reduction
+    manual_ref: "§3.1"
+    notes:
+      - >-
+        Domain C uses 5 percent, not 10 — see is10262.cl_6_2_7.pumpable_reduction_domain_c.
+        Applying the domain B figure on the Section 3 route is a route-crossing error.
+
+  - id: is10262.cl_5_7.absolute_volume
+    clause: cl 5.7
+    title: Volume closure by the absolute volume method
+    tag: IS
+    kind: statement
+    role: constraint
+    value: >-
+      Constituent masses are derived by absolute volume: the volumes of cementitious, water,
+      chemical admixture and aggregates sum to one cubic metre less the entrapped air volume.
+    manual_ref: "§3.1 and §5 check 6"
+
+  - id: is10262.cl_5_8.trial_batches
+    clause: cl 5.8
+    title: Proportions shall be checked by trial batches
+    tag: IS
+    kind: statement
+    role: procedure
+    value: >-
+      Trial 1, then adjust water and admixture and run trial 2 at the same w/c; trials 3 and
+      4 at w/c plus and minus 10 percent.
+    manual_ref: "§3.1 and §7.3"
+
+  # ------------------------------------------------------------------ Section 3, domain C
+
+  - id: is10262.cl_6.section3_applies
+    clause: cl 6
+    title: High strength concrete uses Section 3 — Fig 1 and Tables 3, 4, 5 do not apply
+    tag: IS
+    kind: statement
+    role: constraint
+    value: >-
+      For M65 and above, the Section 3 chain applies. Fig 1, Table 3, Table 4 and Table 5 of
+      Section 2 do not apply on this route.
+    manual_ref: "§3.2 and §8.1"
+    notes:
+      - >-
+        The catch is one assertion: Annex D, w/cm = 0.29 from Table 8. Add it first (§8.1).
+
+  - id: is10262.cl_6_2_2.max_aggregate_size
+    clause: cl 6.2.2
+    title: Nominal maximum aggregate size for high strength concrete
+    tag: IS
+    kind: statement
+    role: procedure
+    value: >-
+      Generally restricted to 20 mm; for M80 and above, 10.0 to 12.5 mm may be preferable.
+    manual_ref: "§3.2"
+
+  - id: is10262.table_6.entrapped_air_domain_c
+    clause: Table 6 (cl 6.2.3)
+    title: Entrapped air content, domain C
+    tag: IS
+    kind: table
+    role: input
+    key: [msa_mm]
+    unit: percent of concrete volume
+    manual_ref: "§3.2"
+    value:
+      - {msa_mm: 10.0, entrapped_air_pct: 1.0}
+      - {msa_mm: 12.5, entrapped_air_pct: 0.8}
+      - {msa_mm: 20.0, entrapped_air_pct: 0.5}
+
+  - id: is10262.table_7.water_content_domain_c
+    clause: Table 7 (cl 6.2.4)
+    title: Maximum water content per cubic metre, domain C
+    tag: IS
+    kind: table
+    role: input
+    key: [msa_mm]
+    unit: kg/m3
+    applies_to: 50 mm slump
+    manual_ref: "§3.2"
+    value:
+      - {msa_mm: 10.0, max_water_kg_per_m3: 200}
+      - {msa_mm: 12.5, max_water_kg_per_m3: 195}
+      - {msa_mm: 20.0, max_water_kg_per_m3: 186}
+    notes:
+      - "Plus or minus 3 percent per 25 mm of slump; a PCE superplasticiser reduces water by 30 percent or more."
+      - "These are maxima, unlike the Table 4 values of Section 2."
+
+  - id: is10262.table_8.water_cementitious_ratio
+    clause: Table 8 (cl 6.2.5)
+    title: Recommended w/cm for high strength concrete made with HRWRA
+    tag: IS
+    kind: table
+    role: input
+    key: [target_strength, msa_mm]
+    unit: ratio
+    applies_to: 28-day cement strength 53 MPa and above
+    manual_ref: "§3.2 and §8.1"
+    value:
+      - {target_strength: 70,  msa_mm: 10.0, wcm: 0.36}
+      - {target_strength: 70,  msa_mm: 12.5, wcm: 0.35}
+      - {target_strength: 70,  msa_mm: 20.0, wcm: 0.33}
+      - {target_strength: 75,  msa_mm: 10.0, wcm: 0.34}
+      - {target_strength: 75,  msa_mm: 12.5, wcm: 0.33}
+      - {target_strength: 75,  msa_mm: 20.0, wcm: 0.31}
+      - {target_strength: 80,  msa_mm: 10.0, wcm: 0.32}
+      - {target_strength: 80,  msa_mm: 12.5, wcm: 0.31}
+      - {target_strength: 80,  msa_mm: 20.0, wcm: 0.29}
+      - {target_strength: 85,  msa_mm: 10.0, wcm: 0.30}
+      - {target_strength: 85,  msa_mm: 12.5, wcm: 0.29}
+      - {target_strength: 85,  msa_mm: 20.0, wcm: 0.27}
+      - {target_strength: 90,  msa_mm: 10.0, wcm: 0.28}
+      - {target_strength: 90,  msa_mm: 12.5, wcm: 0.27}
+      - {target_strength: 90,  msa_mm: 20.0, wcm: 0.26}
+      - {target_strength: 100, msa_mm: 10.0, wcm: 0.26}
+      - {target_strength: 100, msa_mm: 12.5, wcm: 0.25}
+      - {target_strength: 100, msa_mm: 20.0, wcm: 0.24}
+    notes:
+      - >-
+        This table, not Fig 1, is where a domain C w/cm comes from. Deriving M65's w/b as
+        0.230 by extrapolating the Fig 1 fit is a 26 percent error that propagates directly
+        into binder, and it is the defect that withdrew the M65 and M50 rows of Build Manual
+        v2 (§8.1).
+      - >-
+        Interpolation between the tabulated target strengths is not specified by the
+        standard. A target between rows must be handled explicitly, not silently averaged.
+
+  - id: is10262.cl_6_2_6.cementitious_content_domain_c
+    clause: cl 6.2.6
+    title: Cementitious content from water and w/cm, against the IS 456 limits
+    tag: IS
+    kind: statement
+    role: procedure
+    value: >-
+      Cementitious content follows from the water content and the Table 8 w/cm, and must
+      satisfy the IS 456 maximum and minimum cementitious limits. If OPC exceeds the IS 456
+      maximum, special consideration in design is required.
+    manual_ref: "§3.2 and §5.1"
+
+  - id: is10262.table_9.mineral_admixture_dosage
+    clause: Table 9 (cl 6.2.6)
+    title: Recommended mineral admixture dosages, percent by mass of total cementitious
+    tag: IS
+    kind: table
+    role: constraint
+    key: [admixture]
+    unit: percent by mass of total cementitious
+    manual_ref: "§3.2 and §5 check 7"
+    value:
+      - {admixture: fly_ash,      min_pct: 15, max_pct: 30}
+      - {admixture: ggbs,         min_pct: 25, max_pct: 50}
+      - {admixture: metakaoline,  min_pct: 5,  max_pct: 15}
+      - {admixture: silica_fume,  min_pct: 5,  max_pct: 10}
+    notes:
+      - >-
+        Annex D chooses its SCM from this table rather than sizing it to dodge the 450 cap:
+        fly ash 15 percent and silica fume 5 percent, 20 percent total, finishing at 428 kg
+        OPC. An engine reporting M65 as needing about 33 percent fly ash to get under 450 has
+        taken the wrong route (§8.1).
+
+  - id: is10262.table_10.coarse_aggregate_volume_domain_c
+    clause: Table 10 (cl 6.2.7)
+    title: Coarse aggregate volume per unit volume of total aggregate, at w/cm 0.30
+    tag: IS
+    kind: table
+    role: input
+    key: [msa_mm, zone]
+    unit: volume fraction of total aggregate
+    manual_ref: "§3.2"
+    value:
+      - {msa_mm: 10.0, zone: III, ca_volume_fraction: 0.56}
+      - {msa_mm: 10.0, zone: II,  ca_volume_fraction: 0.54}
+      - {msa_mm: 10.0, zone: I,   ca_volume_fraction: 0.52}
+      - {msa_mm: 12.5, zone: III, ca_volume_fraction: 0.58}
+      - {msa_mm: 12.5, zone: II,  ca_volume_fraction: 0.56}
+      - {msa_mm: 12.5, zone: I,   ca_volume_fraction: 0.54}
+      - {msa_mm: 20.0, zone: III, ca_volume_fraction: 0.68}
+      - {msa_mm: 20.0, zone: II,  ca_volume_fraction: 0.66}
+      - {msa_mm: 20.0, zone: I,   ca_volume_fraction: 0.64}
+    notes:
+      - "There is no Zone IV column in this table, unlike Table 5 of Section 2."
+
+  - id: is10262.cl_6_2_7.pumpable_reduction_domain_c
+    clause: cl 6.2.7
+    title: Pumpable placement — reduce coarse aggregate volume, domain C
+    tag: IS
+    kind: scalar
+    role: procedure
+    value: 5
+    unit: percent, maximum reduction
+    manual_ref: "§3.2"
+    notes:
+      - "5 percent, NOT the 10 percent of cl 5.5.2. The two routes differ here."
+
+  # ------------------------------------------------------------------ verification
+
+  - id: is10262.annexes.worked_examples
+    clause: Annexes A, B, C, D, E, F
+    title: Six worked examples with published answers
+    tag: IS
+    kind: table
+    role: procedure
+    key: [annex]
+    manual_ref: "§6"
+    value:
+      - {annex: A, grade: M40, subject: OPC/PPC ordinary}
+      - {annex: B, grade: M40, subject: fly ash}
+      - {annex: C, grade: M40, subject: GGBS}
+      - {annex: D, grade: M70, subject: high strength, Section 3}
+      - {annex: E, grade: M30, subject: self-compacting concrete}
+      - {annex: F, grade: M15, subject: mass concrete}
+    notes:
+      - >-
+        All six become unit tests. Passing them verifies the deterministic layer against the
+        standard rather than against our reading of it.
+      - >-
+        The previous engine's coverage was 13 assertions drawn from Annexes A, D and F only;
+        B, C and E were never tested, and the D assertions covered only the water step, not
+        the w/cm step — which is precisely why §8.1 went unnoticed.
+      - >-
+        The expected values live with the tests, not in this registry. A worked example is a
+        fixture, not a rule.
+
+  - id: is10262.annex_g.typical_admixture_dosage
+    clause: Annex G
+    title: Typical chemical admixture doses — informative, not a limit
+    tag: IS
+    kind: table
+    role: guidance
+    key: [admixture]
+    unit: percent by mass of binder
+    manual_ref: "§8.4"
+    value:
+      - {admixture: plasticiser,      typical_min_pct: 0.3, typical_max_pct: 0.5}
+      - {admixture: superplasticiser, typical_min_pct: 0.5, typical_max_pct: 1.5}
+    notes:
+      - >-
+        The annex is informative and gives typical doses as guidance, not as limits. It is
+        not a source for a dosage cap — see is9103.dosage_cap.unverified.

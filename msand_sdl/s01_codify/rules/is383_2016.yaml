@@ -1,5 +1,39 @@
 standard: IS 383
 year: 2016
+title: Coarse and Fine Aggregate for Concrete — Specification
+revision: Third Revision
 source_file: standards/is383_2016.pdf
-source_sha256: null      # written by scripts/00_freeze_standards.py
-rules: []                # populated in the S01 implementation task
+library_file: IS_codes/IS-383-2016.pdf
+source_sha256: null       # written by scripts/00_freeze_standards.py
+read_from_primary: false  # docs/Build_Manual_v3.md §0.2 — source held, clauses not read
+
+caveats:
+  - id: not_read
+    tag: NV
+    manual_ref: "§0.2 and §9 item 3"
+    text: >-
+      The PDF is in the library and can be frozen, but no clause of it has been read from
+      the primary text. Sand grading zones and coarse aggregate grading are cited by the
+      previous engine ("IS 383 Table 9" for sand zones, "Table 7" for CA grading) and were
+      never verified. Every rule sourced here stays UNVERIFIED until the clauses are read —
+      a frozen source proves the bytes, not the reading.
+
+  - id: revision_resolved
+    tag: V
+    manual_ref: "§0.3 and §9 item 3"
+    text: >-
+      RESOLVED. The title page and Foreword of the library copy both read "Third Revision"
+      (IS 383 : 2016, January 2016, first published 1952, revised 1963 and 1970). poa.md was
+      right; IS 10262:2019's reference list, which prints it as "(second revision)", is
+      wrong. The zones and grading tables remain unread.
+
+rules: []   # populated once the clauses are read from standards/is383_2016.pdf
+
+# Known to be needed by later stages, and deliberately not codified yet:
+#   - sand grading zones I to IV, which key is10262.table_5.coarse_aggregate_volume
+#     and is10262.table_10.coarse_aggregate_volume_domain_c
+#   - coarse aggregate grading by nominal maximum size
+#   - the definition of crushed sand, and the exclusion of crusher dust from it
+#     (Foreword: quarry dust from fine screening "cannot be called crushed sand as per
+#     3.1.2") — directly relevant to what this project calls M-sand
+#   - mixed sand, introduced in this revision alongside crushed sand
