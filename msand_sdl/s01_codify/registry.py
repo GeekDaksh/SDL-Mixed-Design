@@ -84,7 +84,13 @@ def load(rules_dir: Path, manifest: Path, repo_root: Path) -> Registry:
         source_file = data["source_file"]
         read_from_primary = bool(data.get("read_from_primary", False))
         frozen = freeze.is_frozen(source_file, manifest, repo_root)
-        digest = freeze.read_manifest(manifest).get(source_file) if frozen else None
+        digest = (
+            freeze.read_manifest(manifest).get(
+                freeze.manifest_key(source_file, manifest, repo_root)
+            )
+            if frozen
+            else None
+        )
         caveats = tuple(c["text"] for c in data.get("caveats", ()))
 
         entries = data.get("rules") or []

@@ -6,6 +6,7 @@ Spec: docs/Build_Manual_v3.md §0.2 and §10
 from __future__ import annotations
 
 import shutil
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -134,7 +135,7 @@ def test_a_tampered_source_is_detected(tmp_path: Path) -> None:
     source.write_bytes(b"original")
     manifest = freeze.write_manifest(
         standards,
-        [freeze.ManifestEntry(path="standards/fake.pdf", sha256=freeze.hash_file(source))],
+        [freeze.ManifestEntry(path="fake.pdf", sha256=freeze.hash_file(source))],
     )
     assert freeze.is_frozen("standards/fake.pdf", manifest, tmp_path)
 
@@ -142,6 +143,38 @@ def test_a_tampered_source_is_detected(tmp_path: Path) -> None:
     assert not freeze.is_frozen("standards/fake.pdf", manifest, tmp_path)
     with pytest.raises(freeze.SourceNotFrozen, match="does not match"):
         freeze.verify_source("standards/fake.pdf", manifest, tmp_path)
+
+
+def test_manifest_paths_are_relative_to_the_manifest(repo_root: Path) -> None:
+    """Correction 1: `shasum -a 256 -c` must work from the directory the manifest sits in.
+
+    Repo-root-relative paths in a manifest that lives in standards/ verify from the repo
+    root and fail from standards/ — the directory standards/README.md tells you to use.
+    """
+    manifest = repo_root / "standards" / freeze.MANIFEST_NAME
+    recorded = freeze.read_manifest(manifest)
+    assert recorded, "manifest is empty"
+    for key in recorded:
+        assert "/" not in key, f"{key} is not relative to {manifest.parent.name}/"
+        assert (manifest.parent / key).is_file(), f"{key} does not resolve from the manifest"
+
+
+def test_documented_verify_command_actually_runs(repo_root: Path) -> None:
+    """The exact command in standards/README.md, run from the directory it implies."""
+    readme = (repo_root / "standards" / "README.md").read_text(encoding="utf-8")
+    command = "shasum -a 256 -c MANIFEST.sha256"
+    assert command in readme, "README must carry the verbatim verify command"
+
+    if shutil.which("shasum") is None:  # pragma: no cover - platform dependent
+        pytest.skip("shasum not available")
+    result = subprocess.run(
+        command.split(),
+        cwd=repo_root / "standards",
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "FAILED" not in result.stdout
 
 
 # --------------------------------------------------------------- lookup behaviour

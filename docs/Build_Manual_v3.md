@@ -58,8 +58,14 @@ Publication" table is blank. IS 456:2000 has carried amendments. **No `[IS]` tag
 should be treated as amendment-current until each cited clause is checked against a current BIS
 print.** This is one bounded task, not a reason to stop building.
 
-`[NV]` `poa.md` states IS 383:2016 is the "third revision". IS 10262:2019's own reference list
-prints it as "(second revision)". One of the two is wrong. Unresolved — check the IS 383 title page.
+`[V]` **RESOLVED — IS 383:2016 is the Third Revision.** `poa.md` was right; IS 10262:2019's own
+reference list, which prints it as "(second revision)", is wrong. Verified from the frozen copy
+`standards/is383_2016.pdf`: the title page reads "( Third Revision )" and the Foreword opens "This
+Indian Standard (Third Revision) was adopted by the Bureau of Indian Standards…" and records the
+publication history — first published 1952, subsequently revised 1963 and 1970.
+
+`[NV]` This closes the *revision* question only. The IS 383 sand grading zones and coarse aggregate
+grading tables remain unread — see §9 item 3, which stays open.
 
 ### 0.4 The measured numbers, and their single point of failure
 
@@ -670,7 +676,9 @@ extrapolation problem below w/c 0.36.
 
 1. `[NV]` Amendment currency of every IS 456 clause cited here. §0.3.
 2. `[NV]` IS 456 Table 5 cells not corroborated by the IS 10262 annexes — OCR-damaged source. §5.3.
-3. `[NV]` IS 383 sand zones and CA grading. Cited by the engine, never verified.
+3. `[NV]` IS 383 sand zones and CA grading. Cited by the engine, never verified. **Still open.**
+   The edition question is closed (§0.3 — it is the Third Revision), but that settles which
+   document to read, not what it says. The zone and grading tables have not been read.
 4. `[NV]` IS 9103 dosage limits. §8.4.
 5. `[NV]` IS 1489 (Part 1) and IS 455 pozzolana/slag limits that gate Table 5 Note 1. §5.2.
 6. `[NV]` IS 456 Table 7 (workability degrees) — cited by `derive.py`, not read.
@@ -740,6 +748,41 @@ extrapolation problem below w/c 0.36.
     design; a compliance-checker fixture with a known answer key; and a leakage demonstration
     (random split vs GroupKFold on `design_id`). **Not for:** training the strength model, or the
     M-sand correction tier.
+
+13. `[IS]` **Crusher dust is not crushed sand — and the project has not confirmed which it has.**
+    IS 383:2016 **Foreword**, referencing **cl 3.1.2**, states verbatim:
+
+    > "A crusher dust (or quarry dust) produced from the fine screening of quarry crushing cannot
+    > be called crushed sand as per **3.1.2**. It may not be generally in conformity to the
+    > requirement of crushed sand as per the standard and is not expected to perform as efficiently
+    > as properly crushed sand, **unless it is processed to meet the requirement of this standard**."
+
+    `[EI]` Note the qualifier. This is **not an outright exclusion**: processed crusher dust that
+    meets cl 3.1.2 does qualify. Recording it as a ban would be stricter than the standard, the same
+    error §5.1 warns about for the 450 rule.
+
+    `[EI]` **It is a Foreword statement, not a clause requirement**, so it cannot become a compliance
+    gate — exactly the treatment §7.3 gives Abrams and Lyse, which the Foreword also names. It
+    informs how M-sand is described and stratified, not whether a mix passes.
+
+    `[NV]` **Unconfirmed for this project's data.** Nothing on record establishes whether the M-sand
+    in `source_b_workbook`, `source_a_workbook` or `data/meet` is properly crushed sand per cl 3.1.2, processed
+    crusher dust, or unprocessed quarry dust. The workbooks carry a sand *type* but no cl 3.1.2
+    conformity evidence. Since the M-sand correction tier is the project's subject matter, the
+    distinction matters: three sources may not be describing the same material. **Do not resolve
+    this by inference from the column labels.** It needs the crusher's own test data or a statement
+    from the supplier, per source.
+
+    `[NV]` cl 3.1.2 itself has not been read — see item 3.
+
+    `[V]` **And it cannot be read by machine.** `standards/is383_2016.pdf` is a scanned image with
+    **no text layer**: `pdftotext` yields 22 characters, all form feeds — 22 page breaks and not one
+    character of content. Every value in IS 383 must be read from page images by a human or a
+    vision model, and **no script can ever verify a value against this file**. Any IS 383 rule
+    entering the registry is therefore attested by a reading, not by an extraction, and the
+    `[NV]` → `[IS]` promotion for those rules will always rest on that. By contrast
+    `standards/is10262_2019.pdf` (114,400 characters) and `standards/is456_2000.pdf` (256,703) do
+    carry text layers and can be cross-checked mechanically.
 
 ---
 

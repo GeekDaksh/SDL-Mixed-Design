@@ -66,11 +66,14 @@ def main() -> int:
             continue
         target = freeze.adopt(source, inp.standards_dir, Path(source_file).name)
         digest = freeze.hash_file(target)
-        entries.append(freeze.ManifestEntry(path=source_file, sha256=digest))
+        key = freeze.manifest_key(source_file, inp.manifest, REPO_ROOT)
+        entries.append(freeze.ManifestEntry(path=key, sha256=digest))
         print(f"  frozen  {source_file}  {digest[:12]}…  <- {library_file}")
 
     manifest = freeze.write_manifest(inp.standards_dir, entries)
     print(f"\n{len(entries)} source(s) frozen into {manifest.relative_to(REPO_ROOT)}")
+    print(f"verify with:  cd {manifest.parent.relative_to(REPO_ROOT)} && "
+          f"shasum -a 256 -c {manifest.name}")
 
     for line in missing:
         print(f"  NOT FROZEN  {line}", file=sys.stderr)
