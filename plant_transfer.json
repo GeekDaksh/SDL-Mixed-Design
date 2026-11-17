@@ -1,0 +1,56 @@
+{
+ "data_file": "01_RAW_dataset.csv",
+ "ppc_model_x_pct": 35.0,
+ "tau": {
+  "fc": {
+   "tau_log": 0.10037714288252247,
+   "n_plants": 4,
+   "plants": [
+    "P1",
+    "Plant D",
+    "Plant A",
+    "Plant C"
+   ],
+   "model_sd_log": 0.11219735428225251
+  },
+  "slump_mm": {
+   "tau_log": 0.4302650021624612,
+   "n_plants": 4,
+   "plants": [
+    "P1",
+    "Plant D",
+    "Plant A",
+    "Plant C"
+   ],
+   "model_sd_log": 0.23759999003942517
+  }
+ },
+ "ppc_strength_test": {
+  "as recorded (is_ppc = 1)": {
+   "bias": 2.629223749333632,
+   "rmse": 2.910377636129845,
+   "groups": 5
+  },
+  "as plain OPC (x = 0)": {
+   "bias": 1.554049164400631,
+   "rmse": 1.9857737171915506,
+   "groups": 5
+  },
+  "OPC + 15% fly ash": {
+   "bias": 0.6426631516711382,
+   "rmse": 1.3775782172586615,
+   "groups": 5
+  },
+  "OPC + 25% fly ash": {
+   "bias": 0.09117854934289013,
+   "rmse": 1.1901672381918664,
+   "groups": 5
+  },
+  "OPC + 35% fly ash": {
+   "bias": -0.39753270597938695,
+   "rmse": 1.212424482567467,
+   "groups": 5
+  }
+ },
+ "note": "tau = SD across plants of the leave-one-plant-out mean log offset (Plant B excluded, 03 section 8). Few plants: treat as an estimate."
+}

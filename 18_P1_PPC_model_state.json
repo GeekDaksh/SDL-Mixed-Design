@@ -1,0 +1,56 @@
+{
+  "round": 1,
+  "cement": "PPC",
+  "materials_from": {
+    "M30": "M30-P-20MS-01",
+    "M35": "M35-P-20MS-02"
+  },
+  "slump_model": {
+    "rows": 256,
+    "updated_with": []
+  },
+  "strength_model": {
+    "rows": 256,
+    "updated_with": []
+  },
+  "lab_batches_used": {
+    "slump": 0,
+    "strength": 0
+  },
+  "learning_this_round": [
+    {
+      "grade": "M30",
+      "slump_bits_3_trials": 1.546,
+      "slump_bits_with_optional": 3.144,
+      "slump_sd_now_mm": 11.494,
+      "slump_sd_after_trials_mm": 10.746,
+      "slump_sd_after_all_mm": 10.671,
+      "strength_bits_3_trials": 0.052
+    },
+    {
+      "grade": "M35",
+      "slump_bits_3_trials": 1.534,
+      "slump_bits_with_optional": 2.412,
+      "slump_sd_now_mm": 11.494,
+      "slump_sd_after_trials_mm": 10.717,
+      "slump_sd_after_all_mm": 10.523,
+      "strength_bits_3_trials": 0.052
+    },
+    {
+      "grade": "both",
+      "slump_bits_3_trials": 2.453,
+      "slump_bits_with_optional": 4.925,
+      "slump_sd_now_mm": 11.494,
+      "slump_sd_after_trials_mm": 10.458,
+      "slump_sd_after_all_mm": 10.192,
+      "strength_bits_3_trials": 0.101
+    }
+  ],
+  "assumed": [
+    "severe exposure",
+    "target slump = P1 45-min slump",
+    "fly ash SG 2.20",
+    "admixture range plant-observed",
+    "moisture = training-plant median until measured"
+  ]
+}

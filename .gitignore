@@ -1,35 +1,11 @@
-# Python
 __pycache__/
-*.py[cod]
-*.egg-info/
-build/
-dist/
+*.pyc
+.ipynb_checkpoints/
 .venv/
 venv/
-
-# Tooling
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-
-# OS / editor
+.env
 .DS_Store
-.idea/
-.vscode/
-
-# Frozen primary sources: hashed, never committed. MANIFEST.sha256 is tracked.
-standards/*.pdf
-!standards/MANIFEST.sha256
-
-# Stage artifacts
-data/source/*
-data/s02_ingest/*
-data/s03_prepare/*
-data/s06_evaluate/*
-data/s11_propose/*
-data/s12_learn/*
-reports/*
-!**/.gitkeep
-_to_delete/
+data/
+IS_codes/
+*.joblib
+*.xlsx

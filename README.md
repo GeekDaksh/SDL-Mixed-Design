@@ -1,60 +1,63 @@
-# msand-sdl
+# Self-Driving Lab for M-Sand Concrete
 
-A Self-Driving Laboratory for manufactured-sand concrete mix proportioning.
+An AI lab assistant that designs concrete mixes made with manufactured sand (M-Sand).
+It follows the Indian Standards: IS 456 and IS 10262. Then it picks the next lab trials to run.
 
-Data flows in one direction through twelve numbered stages. Each stage has one entry point
-(`stage.run`) and one contract (`contract.py`).
+Final-year capstone, NMIMS MPSTME. Paper submitted to *The Indian Concrete Journal*.
 
-## The twelve stages
+## What it does
 
-| # | Stage | Package | Transformation |
-|---|---|---|---|
-| 01 | CODIFY | `s01_codify` | frozen IS PDFs → clause-tagged rule registry |
-| 02 | INGEST | `s02_ingest` | plant workbooks → one harmonised raw table |
-| 03 | PREPARE | `s03_prepare` | raw table → strength + workability datasets |
-| 04 | DESIGN | `s04_design` | requirement + rules → deterministic IS mix |
-| 05 | VERIFY | `s05_verify` | mix + rules → per-clause verdict |
-| 06 | EVALUATE | `s06_evaluate` | model + dataset → LODO metrics, calibration |
-| 07 | STRENGTH | `s07_strength` | recipe → MPa + uncertainty |
-| 08 | FLOW | `s08_flow` | recipe → mm + uncertainty |
-| 09 | PROPAGATE | `s09_propagate` | changed variable → fully recomputed recipe |
-| 10 | PRICE | `s10_price` | recipe + rates → ₹/m³, kgCO₂e/m³ |
-| 11 | PROPOSE | `s11_propose` | requirement → ranked candidate portfolio |
-| 12 | LEARN | `s12_learn` | trial result → updated, versioned models |
+1. **Follows the IS codes.** Every standards value is written as a rule, and each rule names its clause (102 rules, 63 test cases).
+2. **Designs the mix.** An IS 10262 design engine works out every mix by the code.
+3. **Predicts strength and slump.** Each model starts from the IS 10262 baseline, and a Gaussian Process learns the correction.
+   Each prediction comes with an uncertainty band.
+4. **Screens candidates.** It tries every legal mix of binder, fly ash and admixture. A mix that fails the durability or IS checks is thrown out.
+5. **Optimises.** Bayesian optimisation ranks the mixes that pass on cost and carbon.
+6. **Plans the lab work.** It gives 5 designs and 3 physical trials per order, and an Excel pack for the lab.
+7. **Learns.** After the lab casts the trials, the results go back into the models, and the next round is planned.
 
-The order is declared once, in [`msand_sdl/pipeline.py`](msand_sdl/pipeline.py). Nothing else
-hard-codes a stage sequence.
+## Results (from the gates in `PIPELINE.md`)
 
-## Four structural rules
+| Check | Result |
+|---|---|
+| IS layer test cases | 63 / 63 pass |
+| IS 10262 worked examples reproduced | 8 / 8 |
+| Strength model, out-of-family skill | +0.85 (pass) |
+| Strength bias and coverage | pass |
+| Slump model, out-of-family skill | **fails** (−0.92) |
 
-1. **`s05_verify` must never import `s04_design`.** Its independence is the reason it exists.
-   `tests/test_structure.py` asserts this by parsing the import graph.
-2. **`s04_design` splits Section 2 and Section 3 of IS 10262 into separate modules**, with
-   `domains.py` routing first. M65+ must be structurally incapable of reaching the Fig 1 path.
-3. **Each model package contains its own classical baseline** — `abrams.py` in `s07_strength`,
-   `lyse.py` in `s08_flow` — so a model can never be reported without the thing it must beat.
-4. **`s11_propose/space.py` holds cement and cementitious as separate decision variables.**
-   IS 456 cl 8.2.4.2 caps cement *excluding* fly ash and GGBS; a single `binder` bound cannot
-   express that constraint.
+The slump model is the weak part. So every design goes to a physical trial before anyone uses it.
+Every mix here is computed to comply with the code. None has been cast yet.
 
-## Status
+## Run order
 
-Scaffold only. Every stage module raises `NotImplementedError`. No standards value, coefficient
-or bound appears anywhere in this tree — those load from `s01_codify` at runtime.
-
-## Tests
-
-```sh
-make install      # pip install -e ".[dev]"
-make test         # pytest
-pytest tests/test_structure.py    # the structural invariants; green on a bare scaffold
+```
+00_is_codes_layer          -> is_rules.py
+09_layer0_design_engine    -> layer0.py
+10 / 10b residual GPs      -> workability_residual.py, strength_residual.py
+11_achievability_and_screen-> screen.py
+12_select_serve_explore    -> selection.py
+14_run_all_grades
+15_lab_trial_pack          -> Excel pack for the lab
+13_trial_loop_and_update   -> loop.py (after the trials)
 ```
 
-`tests/test_structure.py` is the only test that passes today. Every other test is a skipped
-placeholder naming the assertion its stage task must satisfy.
+Notebooks 02, 03, 03b, 08 and 08b are the data preparation, model audit and optimiser benchmark.
+`PIPELINE.md` explains each step. `docs/` has the audit notes.
 
-## Authority
+## Data
 
-`docs/Build_Manual_v3.md` is the authority for every engineering rule — standards values, cleaning
-rules, model choices and bounds. This repository defines structure only; where a module needs a
-number, it cites the clause and loads the value from the rule registry.
+The batch data comes from partner ready-mix plants. It is **not included** in this repo.
+To run the notebooks, put your own data in `data/01_RAW_dataset.csv`, in the same column format.
+The IS code PDFs are copyrighted by BIS, so they are not included either. Put them in `IS_codes/`.
+
+## Setup
+
+```bash
+pip install -r requirements.txt
+jupyter lab
+```
+
+## Team
+
+Daksh Patil and Aruja Tiwary.

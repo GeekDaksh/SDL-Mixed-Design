@@ -1,0 +1,113 @@
+{
+  "order": "M30-120-severe",
+  "status": "RANKED",
+  "notes": [
+    "trial anchor: design 1 (meets both thresholds)",
+    "batch volume 0.050 m3 = 6 cubes + slump + density + 25% margin [PC]; IS 1199 Pt 1 strength sample >= 0.02 m3"
+  ],
+  "serve": {
+    "grid": {
+      "grid": {
+        "binder_step_kg": 10.0,
+        "scm_step": 0.025,
+        "admixture_step_pct": 0.1,
+        "flyash_max_frac": 0.35,
+        "ggbs_max_frac": 0.5
+      },
+      "binder_lo": 320.0,
+      "domain": "Domain.ORDINARY",
+      "scm_range_basis": "[PC] project search range for Section 2; the binding limits are IS 456 cl 8.2.4.2 (cement) and Table 5 Note 1 (countable fly ash), both enforced by compliance_gate, not by this range",
+      "binder_hi_rule": "IS 456 cl 8.2.4.2 cement ceiling 450 / (1 - SCM share)",
+      "flyash_options": [
+        0.0,
+        0.025,
+        0.05,
+        0.075,
+        0.1,
+        0.125,
+        0.15,
+        0.175,
+        0.2,
+        0.225,
+        0.25,
+        0.275,
+        0.3,
+        0.325,
+        0.35
+      ],
+      "ggbs_options": [
+        0.0
+      ],
+      "admixture_options": [
+        0.621,
+        0.721,
+        0.821,
+        0.921,
+        1.021,
+        1.121,
+        1.221,
+        1.321,
+        1.421
+      ],
+      "n_combinations": 3267
+    },
+    "refused_exclusive": {
+      "gate: maximum free w/c": 916,
+      "gate: admixture dosage": 39,
+      "gate: minimum binder": 1062,
+      "support: outside the training box": 1175,
+      "support: outside the cl 5.3 fitted water / dose range": 1
+    },
+    "refused_diagnostic": {
+      "strength fit: w/c outside [0.340, 0.523]": 784,
+      "cl 5.3 fit: water outside [152.4, 172.9] kg": 173,
+      "cl 5.3 fit: SP dose outside [0.621, 1.476] %": 63,
+      "support axis: sp_pct_binder outside [0.621, 1.48]": 63,
+      "support axis: binder_kg_m3 outside [327, 450]": 930,
+      "support axis: scm_frac outside [0.0699, 0.139]": 1027,
+      "support axis: fine_frac_of_agg outside [0.389, 0.46]": 9,
+      "support axis: agg_binder_ratio outside [4.11, 6]": 998
+    },
+    "n_combinations": 3267,
+    "n_after_gate": 74,
+    "mode": "serve",
+    "n_candidates": 74,
+    "out_of_group_sd_mm": 19.428305938837912
+  },
+  "explore_batch": {
+    "k": 3,
+    "shared_design_values": {
+      "dv_binder_kg_m3": {
+        "distinct_values": 3,
+        "all_same": false
+      },
+      "dv_flyash_frac": {
+        "distinct_values": 3,
+        "all_same": false
+      },
+      "dv_ggbs_frac": {
+        "distinct_values": 1,
+        "all_same": true
+      },
+      "dv_sp_pct_binder": {
+        "distinct_values": 2,
+        "all_same": false
+      }
+    },
+    "joint_batch_risk": "1 of 4 design variables take a single value across the whole batch. If that value rests on a wrong assumption, that fraction of the batch is wasted together, not independently.",
+    "outside_support": 2
+  },
+  "declared_inputs": {
+    "flyash_sg": [
+      2.2,
+      "ASSUMED -- IS 10262 Annex B-2(d) example"
+    ],
+    "admixture_range_pct": [
+      [
+        0.621,
+        1.476
+      ],
+      "PLANT-OBSERVED"
+    ]
+  }
+}
