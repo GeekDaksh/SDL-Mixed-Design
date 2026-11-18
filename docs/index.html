@@ -52,12 +52,13 @@ body::after{content:"";position:fixed;inset:-50%;pointer-events:none;z-index:50;
 .hero h1 .l2{display:block;color:var(--tape)}
 .hero .sub{display:flex;flex-direction:column;align-items:flex-start;gap:22px;margin-top:4vh}
 .hero p{max-width:46ch;color:var(--cement);font-size:clamp(16px,1.3vw,19px)}
-.actions{display:flex;gap:12px;pointer-events:auto}
+.actions{display:flex;flex-wrap:wrap;gap:10px;pointer-events:auto}
+.btn{white-space:nowrap}
 .btn{display:inline-block;padding:14px 22px;font:600 15px/1 var(--body);text-decoration:none;border:1.5px solid var(--cement);border-radius:999px;transition:background .2s,color .2s}
 .btn:hover{background:var(--cement);color:var(--formwork)}
 .btn.solid{background:var(--tape);border-color:var(--tape);color:var(--formwork)}
 .btn.solid:hover{background:var(--cement);border-color:var(--cement)}
-.hint{position:absolute;right:4vw;top:4vh;font-size:14px;color:var(--dust);pointer-events:none}
+.hint{position:absolute;right:4vw;font-size:14px;color:var(--dust);pointer-events:none}
 
 /* ---------- screen (scroll-driven funnel) ---------- */
 .screen{position:relative;z-index:2;height:620vh}
@@ -74,7 +75,7 @@ body::after{content:"";position:fixed;inset:-50%;pointer-events:none;z-index:50;
 .gates i.win{background:var(--tape)}
 
 /* ---------- content sections ---------- */
-main{position:relative;z-index:2;background:var(--formwork)}
+main{position:relative;z-index:2;background:transparent}
 section.block{padding:16vh 4vw;border-top:1px solid var(--line)}
 .block h2{font:900 clamp(48px,8vw,128px)/.86 var(--display);text-transform:uppercase;max-width:14ch}
 .block .lede{margin:28px 0 56px;max-width:58ch;font-size:clamp(17px,1.4vw,20px)}
@@ -166,6 +167,61 @@ footer .btn.solid{background:var(--formwork);color:var(--tape);border-color:var(
   .hint{display:none}
 }
 
+
+
+/* ---------- top navigation ---------- */
+.topnav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 4vw;
+  background:rgba(30,33,36,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(58,63,68,.6)}
+.topnav .brand{display:flex;align-items:baseline;gap:10px;white-space:nowrap;text-decoration:none;font:900 26px/1 var(--display);color:var(--tape)}
+.topnav .brand span{font:500 13px/1 var(--body);color:var(--dust)}
+.topnav .links{display:flex;align-items:center;gap:4px}
+.topnav .links a{padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none;color:var(--cement);transition:background .15s}
+.topnav .links a:hover{background:var(--slab)}
+.topnav .links a.ext{border:1.5px solid var(--line);margin-left:6px}
+.topnav .links a.ext::after{content:"";display:inline-block;width:7px;height:7px;margin-left:7px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:translateY(-2px)}
+.topnav .links a.solid{background:var(--tape);border-color:var(--tape);color:var(--formwork)}
+.topnav .links a.solid:hover{background:var(--cement);border-color:var(--cement)}
+.topnav .menu{all:unset;display:none;cursor:pointer;padding:9px 16px;border:1.5px solid var(--line);border-radius:999px;font-size:14px;font-weight:600}
+@media (max-width:900px){
+  .topnav .menu{display:inline-block}
+  .topnav .links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;padding:12px 4vw 18px;background:var(--formwork);border-bottom:1px solid var(--line)}
+  .topnav.open .links{display:flex}
+  .topnav .links a.ext{margin:6px 0 0}
+}
+.hint{top:86px}
+section.block,.screen,footer{scroll-margin-top:70px}
+/* ---------- batching scene ---------- */
+.batching{position:relative;z-index:2;height:340vh}
+.bstage{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center;gap:4vw;padding:70px 4vw 20px}
+.bcopy h2{font:900 clamp(48px,6.5vw,110px)/.86 var(--display);text-transform:uppercase;max-width:9ch;margin-bottom:34px}
+.bsteps{list-style:none;counter-reset:b;display:grid;gap:18px;max-width:44ch}
+.bsteps li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;column-gap:14px;opacity:.32;transition:opacity .35s}
+.bsteps li::before{content:counter(b);grid-row:span 2;font:900 40px/1 var(--display);color:var(--dust)}
+.bsteps li b{font:800 26px/1.05 var(--display);text-transform:uppercase}
+.bsteps li span{font-size:15px;color:var(--cement)}
+.bsteps li.on{opacity:1}
+.bsteps li.on::before{color:var(--tape)}
+.bscene{width:100%;max-height:78svh}
+@media (max-width:860px){
+  .bstage{grid-template-columns:1fr;align-content:start;gap:8px;padding-top:80px}
+  .bcopy h2{font-size:44px;margin-bottom:14px}
+  .bsteps li{opacity:0;position:absolute;pointer-events:none}
+  .bsteps li.on{opacity:1;position:static}
+  .bscene{max-height:52svh}
+}
+
+/* ---------- wheelbarrow scroll progress ---------- */
+.roll{position:fixed;left:0;right:0;bottom:0;height:46px;z-index:55;pointer-events:none}
+.roll .rtrack{position:absolute;left:0;right:0;bottom:6px;height:2px;background:rgba(58,63,68,.8)}
+.roll .rdone{position:absolute;left:0;bottom:6px;height:2px;background:var(--tape);width:0}
+.roll svg{position:absolute;bottom:4px;left:0;width:64px;height:42px;will-change:transform}
+@media (max-width:600px){.roll svg{width:48px;height:32px}}
+
+/* ---------- scattered site background ---------- */
+.bgsite{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bgsite svg{position:absolute;opacity:.075;filter:grayscale(.55);will-change:transform}
+main{background:transparent}
+section.block{position:relative}
 /* ---------- hero site scene ---------- */
 .site{position:absolute;right:3vw;bottom:3vh;width:min(46vw,640px);height:auto;z-index:1;pointer-events:none}
 .hero .sub{position:relative;z-index:2}
@@ -376,22 +432,36 @@ table.batch tbody tr[data-i]:hover td{background:var(--slab)}
   <div class="bar" id="ldbar"></div>
 </div>
 
+<div class="bgsite" id="bgsite" aria-hidden="true"></div>
 <canvas id="stage" aria-hidden="true"></canvas>
-
-<header class="hero">
-  <span class="hint">Move your cursor to stir the mix</span>
-  <svg class="site" viewBox="0 0 640 210" aria-hidden="true">
-    <path d="M0 200 H640" stroke="#3A3F44" stroke-width="3"/>
-    <use href="#i-shovel" x="8" y="40" width="60" height="160"/>
-    <use href="#i-barrow-sand" x="56" y="74" width="200" height="130"/>
-    <use href="#i-can" x="250" y="118" width="66" height="84"/>
-    <use href="#i-bag" x="318" y="112" width="72" height="90"/>
-    <use href="#i-bag" x="380" y="112" width="72" height="90"/>
-    <use href="#i-bag" x="349" y="44" width="72" height="90"/>
-    <use href="#i-cone-slump" x="456" y="126" width="62" height="76"/>
-    <use href="#i-cube" x="516" y="150" width="52" height="52"/>
-    <use href="#i-tcone" x="572" y="112" width="66" height="90"/>
+<div class="roll" id="roll" aria-hidden="true">
+  <div class="rtrack"></div><div class="rdone"></div>
+  <svg viewBox="0 0 200 130">
+    <path d="M32 48 Q90 6 146 48 Z" fill="#B9A27A"/>
+    <path d="M28 46 H150 L128 88 H50 Z" fill="#C2452F"/>
+    <path d="M128 88 L184 52" stroke="#9A9D9B" stroke-width="7" stroke-linecap="round"/>
+    <path d="M120 88 L132 112" stroke="#9A9D9B" stroke-width="6" stroke-linecap="round"/>
+    <g id="r-wheel"><circle cx="44" cy="112" r="15" fill="#3A3F44" stroke="#9A9D9B" stroke-width="4"/>
+      <path d="M44 99 V125 M31 112 H57" stroke="#9A9D9B" stroke-width="3"/></g>
   </svg>
+</div>
+
+
+<nav class="topnav" aria-label="Page">
+  <a class="brand" href="#top">SDL<span>M-Sand concrete</span></a>
+  <div class="links">
+    <a href="#design">Design a mix</a>
+    <a href="#batching">Batching</a>
+    <a href="#screen">Screening</a>
+    <a href="#paper">Results</a>
+    <a href="#loop">How it works</a>
+    <a class="ext" href="https://github.com/GeekDaksh/SDL-Mixed-Design" target="_blank" rel="noopener">GitHub</a>
+    <a class="ext solid" href="https://portfolio-1tu9.onrender.com" target="_blank" rel="noopener">Portfolio</a>
+  </div>
+  <button class="menu" aria-expanded="false" aria-controls="navlinks">Menu</button>
+</nav>
+<header class="hero" id="top">
+  <span class="hint">Move your cursor to stir the mix</span>
   <h1>3,267 mixes.<span class="l2">74 pass the code.</span></h1>
   <div class="sub">
     <p>An AI lab assistant for concrete made with manufactured sand, trained on 401 mix records from ten Maharashtra plants. It designs mixes to IS 456 and IS 10262, throws out every mix that breaks a rule, and picks the next trial for the lab. Each dot is one candidate mix.</p>
@@ -402,6 +472,43 @@ table.batch tbody tr[data-i]:hover td{background:var(--slab)}
     </div>
   </div>
 </header>
+
+<section class="batching" id="batching" aria-label="How one cubic metre is batched">
+  <div class="bstage">
+    <div class="bcopy">
+      <h2>One cubic metre, batched</h2>
+      <ol class="bsteps">
+        <li data-s="0"><b>Cement</b><span>385 kg of PPC, about 7.7 bags, goes in first.</span></li>
+        <li data-s="1"><b>Superplasticiser</b><span>6.25 kg of PCE, 1.42% of the binder. It lets the mix flow with less water.</span></li>
+        <li data-s="2"><b>Ready to mix</b><span>With 55 kg of fly ash, 159 kg of water and the aggregates, this is the paper's M30 engine design.</span></li>
+      </ol>
+    </div>
+    <svg class="bscene" viewBox="0 0 800 520" role="img" aria-label="A cement bag and a superplasticiser can pour into a mixing tray">
+      <defs>
+        <clipPath id="trayclip"><path d="M230 380 H570 L540 470 H260 Z"/></clipPath>
+        <linearGradient id="wet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d8186"/><stop offset="1" stop-color="#5d6166"/></linearGradient>
+      </defs>
+      <!-- ground -->
+      <path d="M40 476 H760" stroke="#3A3F44" stroke-width="3"/>
+      <!-- tray fill (grows) -->
+      <g clip-path="url(#trayclip)">
+        <rect id="b-fill" x="220" y="470" width="360" height="0" fill="#B7B3A9"/>
+        <rect id="b-wet" x="220" y="470" width="360" height="0" fill="url(#wet)" opacity="0"/>
+      </g>
+      <!-- tray -->
+      <path d="M230 380 H570 L540 470 H260 Z" fill="none" stroke="#8E918F" stroke-width="6" stroke-linejoin="round"/>
+      <path d="M218 380 H582" stroke="#8E918F" stroke-width="8" stroke-linecap="round"/>
+      <!-- cement powder stream -->
+      <g id="b-powder" fill="#CFC8B6"></g>
+      <!-- PCE stream -->
+      <path id="b-liquid" d="M430 232 C 432 300, 420 330, 418 392" fill="none" stroke="#5FA8D3" stroke-width="7" stroke-linecap="round" stroke-dasharray="14 10" opacity="0"/>
+      <!-- cement bag: pivot (mouth) at local 60,20 -->
+      <g id="b-bag"><use href="#i-bag" width="120" height="150"/></g>
+      <!-- PCE can: pivot (spout) at local 88,28 -->
+      <g id="b-can"><use href="#i-can" width="120" height="150"/></g>
+    </svg>
+  </div>
+</section>
 
 <section class="screen" id="screen" aria-label="How 3,267 candidate mixes are screened down to 74">
   <div class="panel">
@@ -583,6 +690,40 @@ table.batch tbody tr[data-i]:hover td{background:var(--slab)}
 </footer>
 
 <script>
+/* ================= top nav (mobile menu) ================= */
+(() => { const n = document.querySelector('.topnav'), b = n.querySelector('.menu');
+  b.addEventListener('click', () => { const o = n.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
+  n.querySelectorAll('.links a').forEach(a => a.addEventListener('click', () => { n.classList.remove('open'); b.setAttribute('aria-expanded', false); })); })();
+/* ================= scattered site background ================= */
+(() => {
+  const host = document.getElementById('bgsite');
+  const items = ['i-bag','i-barrow-sand','i-can','i-tcone','i-bucket','i-cone-slump','i-cube','i-shovel','i-barrow-agg','i-ash','i-bag','i-tcone','i-cube','i-bucket','i-sandheap','i-can'];
+  const box = {'i-barrow-sand':[200,130],'i-barrow-agg':[200,130],'i-sandheap':[240,110],'i-shovel':[60,160],'i-cube':[120,120]};
+  let sd = 11; const r = () => (sd = (sd*16807)%2147483647)/2147483647;
+  // a jittered grid keeps them spread out instead of clumping
+  const cols = 4, rows = Math.ceil(items.length/cols), els = [];
+  items.forEach((id,i) => {
+    const [w,h] = box[id] || [120,150], sc = .7 + r()*.7;
+    const el = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    el.setAttribute('viewBox',`0 0 ${w} ${h}`); el.setAttribute('width',w*sc); el.setAttribute('height',h*sc);
+    el.innerHTML = `<use href="#${id}"/>`;
+    const cx = ((i%cols) + .15 + r()*.7)/cols, cy = (Math.floor(i/cols) + .1 + r()*.8)/rows;
+    els.push({el, cx, cy, rot:(r()-.5)*36, speed:.15 + r()*.35, h:h*sc});
+    host.appendChild(el);
+  });
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function place(){
+    const W = innerWidth, H = innerHeight, y0 = still ? 0 : scrollY;
+    for (const it of els){
+      const span = H + it.h*2;
+      let y = (it.cy*span - y0*it.speed) % span; if (y < 0) y += span;
+      it.el.style.transform = `translate(${it.cx*W - 60}px, ${y - it.h}px) rotate(${it.rot}deg)`;
+    }
+  }
+  place(); addEventListener('resize', place);
+  if (!still) addEventListener('scroll', () => requestAnimationFrame(place), {passive:true});
+})();
+
 (() => {
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -663,7 +804,7 @@ function layout(){
     const a = rnd()*Math.PI*2, rad = Math.pow(rnd(),.55);
     p.hx = W*.68 + Math.cos(a)*rad*W*.30; p.hy = H*.46 + Math.sin(a)*rad*H*.36;
     if (mobile){ p.hx = W*.5 + Math.cos(a)*rad*W*.44; p.hy = H*.25 + Math.sin(a)*rad*H*.19; }
-    p.shade = 120 + Math.floor(rnd()*95);
+    p.shade = 78 + Math.floor(rnd()*70);
     if (p.f===5){ p.sx = sx0 + (s%sc)*ss + ss/2; p.sy = sy0 + Math.floor(s/sc)*ss + ss/2; s++; }
     if (!p.x){ p.x=p.hx; p.y=p.hy; }
   });
@@ -681,7 +822,8 @@ function readScroll(){
   const r = screenEl.getBoundingClientRect(), h = screenEl.offsetHeight - innerHeight;
   morph = Math.min(1, Math.max(0, (innerHeight - r.top) / innerHeight));      // hero -> grid as the section enters
   gateP = Math.min(1, Math.max(0, -r.top / h));                                // 0..1 through the section
-  const end = r.bottom < innerHeight*.35;
+  const b = document.getElementById('batching').getBoundingClientRect();
+  const end = r.bottom < innerHeight*.35 || (b.top < innerHeight*.55 && r.top > innerHeight*.45);
   if (end === stageOn){ stageOn = !end; cv.classList.toggle('gone', end); }
 }
 addEventListener('scroll', readScroll, {passive:true}); readScroll();
@@ -759,9 +901,9 @@ function drawBand(){
     <rect x="${x(120-hw)}" y="70" width="${x(120+hw)-x(120-hw)}" height="34" fill="${ok?'#F2C12E':'#E2553F'}" opacity=".9"/>
     <text x="${x(120-hw)}" y="122">model range at ${Math.round(C*100)}%</text>
     <rect x="${x(120+BIAS-hw)}" y="134" width="${x(120+BIAS+hw)-x(120+BIAS-hw)}" height="12" fill="none" stroke="#8E918F" stroke-width="1.5"/>
-    <text x="${x(120+BIAS-hw)}" y="164">a new mix family can shift it +11 mm</text>
+    <text x="${x(120+BIAS-hw)}" y="180">a new mix family can shift it +11 mm</text>
     <line x1="${x(120)}" x2="${x(120)}" y1="36" y2="150" stroke="#fff" stroke-width="2"/>
-    <line x1="30" x2="610" y1="190" y2="190" stroke="#3A3F44"/>
+    <line x1="30" x2="610" y1="192" y2="192" stroke="#3A3F44"/>
     ${[60,80,100,120,140,160,180].map(m=>`<text x="${x(m)}" y="212" text-anchor="middle">${m}</text>`).join('')}
     <text x="610" y="228" text-anchor="end">slump, mm</text>`);
 }
@@ -4881,6 +5023,65 @@ function fillDetail(d) {
     <p class="note">Dry weights. Correct sand and aggregate for their moisture before weighing, as the lab pack does.</p>`;
   document.getElementById('clauses').innerHTML = d.checks.map(c => `<div class="${c.outcome}"><span class="o">${c.outcome.replace('_', ' ')}</span><p><b>${c.clause}</b> ${c.check}. ${c.detail.replace(/</g, '&lt;')}</p></div>`).join('');
 }
+})();
+
+/* ================= batching scene + wheelbarrow progress ================= */
+(() => {
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sec = document.getElementById('batching'), bag = document.getElementById('b-bag'), can = document.getElementById('b-can');
+  const fill = document.getElementById('b-fill'), wet = document.getElementById('b-wet'), liq = document.getElementById('b-liquid');
+  const powder = document.getElementById('b-powder'), steps = [...sec.querySelectorAll('.bsteps li')];
+  const NS = 'http://www.w3.org/2000/svg', grains = [];
+  for (let i = 0; i < 46; i++) { const c = document.createElementNS(NS, 'circle'); c.setAttribute('r', 2 + (i % 3)); powder.appendChild(c); grains.push({c, ph: i / 46, jx: (i * 37 % 17) - 8}); }
+  const seg = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  let P = still ? 1 : 0, pouring = 0, liquidOn = 0, t = 0, visible = false;
+
+  function apply(p) {
+    // cement bag: in, tip, pour, back, out
+    const bIn = ease(seg(p, .02, .12)), bTip = ease(seg(p, .12, .2)) - ease(seg(p, .38, .44)), bOut = ease(seg(p, .44, .52));
+    bag.setAttribute('transform', `translate(${330 - 260 * (1 - bIn) - 300 * bOut} 190) rotate(${118 * bTip} 60 20)`);
+    bag.style.opacity = bIn * (1 - bOut);
+    pouring = (p > .19 && p < .4) ? 1 : 0;
+    // PCE can: in, tip, pour, back, out
+    const cIn = ease(seg(p, .52, .6)), cTip = ease(seg(p, .6, .67)) - ease(seg(p, .8, .85)), cOut = ease(seg(p, .85, .93));
+    can.setAttribute('transform', `translate(${342 + 260 * (1 - cIn) + 300 * cOut} 202) rotate(${-105 * cTip} 88 28)`);
+    can.style.opacity = cIn * (1 - cOut);
+    liquidOn = (p > .665 && p < .8) ? 1 : 0; liq.style.opacity = liquidOn;
+    // tray: cement powder builds up, then PCE darkens it as it wets
+    const h1 = 52 * seg(p, .2, .4), h2 = 14 * seg(p, .67, .8);
+    fill.setAttribute('y', 470 - h1 - h2); fill.setAttribute('height', h1 + h2);
+    wet.setAttribute('y', 470 - h1 - h2); wet.setAttribute('height', h1 + h2); wet.style.opacity = .9 * seg(p, .67, .8);
+    const s = p < .5 ? 0 : p < .88 ? 1 : 2; steps.forEach((li, i) => li.classList.toggle('on', i === s));
+  }
+  function read() {
+    const r = sec.getBoundingClientRect(), h = sec.offsetHeight - innerHeight;
+    P = Math.min(1, Math.max(0, -r.top / h)); visible = r.top < innerHeight && r.bottom > 0;
+    apply(P);
+  }
+  function tick() {
+    t += 1 / 60;
+    if (visible) {
+      grains.forEach(g => {
+        const k = (t * 1.6 + g.ph) % 1, y = 214 + k * 180, x = 392 + g.jx * k * 1.4;
+        g.c.setAttribute('cx', x); g.c.setAttribute('cy', y); g.c.style.opacity = pouring ? (k < .95 ? .9 : 0) : 0;
+      });
+      if (liquidOn) liq.style.strokeDashoffset = -t * 90;
+    }
+    requestAnimationFrame(tick);
+  }
+  read();
+  if (!still) { addEventListener('scroll', read, {passive: true}); addEventListener('resize', read); requestAnimationFrame(tick); }
+
+  /* wheelbarrow rolls along the bottom as you scroll the page */
+  const roll = document.getElementById('roll'), bar = roll.querySelector('svg'), wheel = document.getElementById('r-wheel'), done = roll.querySelector('.rdone');
+  function progress() {
+    const max = document.documentElement.scrollHeight - innerHeight, f = max > 0 ? scrollY / max : 0;
+    const w = innerWidth - bar.getBoundingClientRect().width, x = f * w;
+    bar.style.transform = `translateX(${x}px)`; done.style.width = (x + 20) + 'px';
+    wheel.setAttribute('transform', `rotate(${(x / 13) * 57.3 % 360} 44 112)`);   // wheel radius about 13 px on screen
+  }
+  progress(); addEventListener('scroll', () => requestAnimationFrame(progress), {passive: true}); addEventListener('resize', progress);
 })();
 </script>
 </body>
