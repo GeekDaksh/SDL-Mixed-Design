@@ -196,6 +196,7 @@ footer .btn.solid{background:var(--formwork);color:var(--tape);border-color:var(
   .topnav .links a.ext{margin:6px 0 0}
 }
 .hint{top:86px}
+@media (max-width:640px){.topnav .brand span{display:none}}
 section.block,.screen,footer{scroll-margin-top:70px}
 /* ---------- batching scene ---------- */
 .batching{position:relative;z-index:2;height:900vh}
@@ -490,7 +491,7 @@ table.batch tbody tr[data-i]:hover td{background:var(--slab)}
       <div class="bnow" id="b-now"><b>Cement</b><span>385 kg of PPC, about 7.7 bags.</span></div>
       <div class="bdots" id="b-dots" aria-hidden="true"></div>
     </div>
-    <svg class="bscene" id="b-scene" viewBox="0 0 1000 560" role="img" aria-label="Materials go into a drum mixer, the concrete is cast into cubes, and a slump test is run">
+    <svg class="bscene" id="b-scene" viewBox="110 0 1000 560" role="img" aria-label="Materials go into a drum mixer, the concrete is cast into cubes, and a slump test is run">
       <defs>
         <clipPath id="barrelclip"><path d="M-100 -78 Q-128 0 -100 78 L50 78 L50 -78 Z"/></clipPath>
         <clipPath id="moldclip0"><rect x="1270" y="350" width="120" height="120"/></clipPath>
@@ -501,7 +502,7 @@ table.batch tbody tr[data-i]:hover td{background:var(--slab)}
 
       <!-- ground across all three stations -->
       <path d="M-200 500 H3200" stroke="#3A3F44" stroke-width="3"/>
-      <text class="bst" x="80" y="540">Mixing</text><text class="bst" x="1080" y="540">Casting cubes</text><text class="bst" x="2080" y="540">Slump test</text>
+      <text class="bst" x="190" y="540">Mixing</text><text class="bst" x="1190" y="540">Casting cubes</text><text class="bst" x="2190" y="540">Slump test</text>
 
       <!-- ========== station 1: drum mixer ========== -->
       <g id="mixer">
@@ -758,7 +759,7 @@ table.batch tbody tr[data-i]:hover td{background:var(--slab)}
       <a class="btn solid" href="https://github.com/GeekDaksh/SDL-Mixed-Design">GitHub repository</a>
       <a class="btn" href="https://portfolio-1tu9.onrender.com">Back to portfolio</a>
     </div>
-    <span>Aruja Tiwary, Lubhana Mutha and Daksh Patil, guided by Dr Vaishali Kulkarni, NMIMS MPSTME.<br>Paper submitted to The Indian Concrete Journal.</span>
+    <span>Built by Daksh Patil, with Aruja Tiwary and Lubhana Mutha, guided by Dr Vaishali Kulkarni, NMIMS MPSTME.<br>Paper submitted to The Indian Concrete Journal.</span>
   </div>
 </footer>
 
@@ -5150,7 +5151,7 @@ function fillDetail(d) {
   let pouring = 0, scooping = 0, mixing = 0, castI = -1, castK = 0, tampS = 0, sand = 1;
   function apply(p) {
     /* camera: mixer -> cubes -> slump */
-    const cam = lerp(0, 1000, ease(seg(p, .585, .62))) + lerp(0, 1000, ease(seg(p, .745, .78)));
+    const cam = 110 + lerp(0, 890, ease(seg(p, .585, .62))) + lerp(0, 1000, ease(seg(p, .745, .78)));   // mixer centred at ~610, cubes at 1500, slump at 2500
     scene.setAttribute('viewBox', `${cam} 0 1000 560`);
 
     /* cement bag (pivot at its mouth) */
