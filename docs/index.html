@@ -259,6 +259,35 @@ select{appearance:none;background:var(--formwork) url("data:image/svg+xml,%3Csvg
 .run{width:100%;font-size:17px;padding:18px;border-radius:12px;cursor:pointer}
 .run:disabled{opacity:.6;cursor:progress}
 .tiny{font-size:13px;color:var(--dust);margin-top:-8px}
+/* mobile: nothing in the form may be wider than the card */
+.orderform>*,.f,.two>*{min-width:0}
+.orderform select{width:100%;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:40px}
+.orderform input[type=range]{width:100%;min-width:0}
+.tmean{font-size:14px;line-height:1.45;color:var(--dust)}
+.tmean b{color:var(--cement);font:800 20px/1 var(--display)}
+@media (max-width:640px){
+  .orderform{padding:20px 16px;gap:18px;border-radius:14px}
+  .orderform select{font-size:19px;padding:11px 36px 11px 13px}
+  #o-fam{font:600 15px/1.2 var(--body,inherit)}
+  .two{grid-template-columns:1fr;gap:18px}
+  .seg label{padding:8px 11px;font-size:13.5px}
+  #design{padding-bottom:70px}
+}
+/* pipeline running */
+#result{scroll-margin-top:96px}
+.running{display:grid;justify-items:center;gap:18px;padding:30px 10px 10px;text-align:center}
+.running svg{width:min(220px,60vw);height:auto}
+.running .drum{transform-origin:110px 70px;animation:spin 1.6s linear infinite}
+.running .wheel{transform-box:fill-box;transform-origin:center;animation:spin 1.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.running ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;text-align:left;font-size:14.5px}
+.running li{color:var(--line);display:flex;gap:10px;align-items:center;transition:color .3s}
+.running li::before{content:"";width:10px;height:10px;border-radius:50%;border:2px solid currentColor;flex:none}
+.running li.on{color:var(--cement)}.running li.on::before{background:var(--tape);border-color:var(--tape);animation:pulse 1s ease-in-out infinite}
+.running li.done{color:var(--dust)}.running li.done::before{background:var(--dust);border-color:var(--dust)}
+.running .elapsed{font-size:13px;color:var(--dust)}
+@keyframes pulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.running .drum,.running .wheel,.running li.on::before{animation:none}}
 
 .result .empty{border:1.5px dashed var(--line);border-radius:18px;padding:40px;color:var(--dust);text-align:center}
 .emptyart{width:100%;max-width:520px;margin:0 auto 16px;display:block}
@@ -611,7 +640,8 @@ table.batch tbody tr[data-i]:hover td{background:var(--slab)}
         <div class="f"><label for="o-grade">Grade</label>
           <select id="o-grade">
             <option>M15</option><option>M20</option><option>M25</option><option selected>M30</option><option>M35</option><option>M40</option><option>M45</option><option>M50</option>
-          </select></div>
+          </select>
+          <p class="tmean" id="o-tmean">Target strength is not an input. The IS rule layer derives it from the grade.</p></div>
         <div class="f"><label for="o-slump">Target slump <output id="o-slumpv">120 mm</output></label>
           <input id="o-slump" type="range" min="25" max="200" step="5" value="120"></div>
         <fieldset class="f"><legend>Exposure</legend>
@@ -1010,7 +1040,7 @@ async function call(path, body) {
   const j = await r.json(); if (!r.ok) throw new Error(j.reason || r.status); return j;
 }
 const setOrder = f => {
-  $('o-grade').value = f.grade; slump.value = f.target_slump_mm; slumpv.textContent = f.target_slump_mm + ' mm';
+  $('o-grade').value = f.grade; showTarget(); slump.value = f.target_slump_mm; slumpv.textContent = f.target_slump_mm + ' mm';
   document.querySelector(`input[name=exp][value=${f.exposure}]`).checked = true;
   document.querySelector(`input[name=use][value=${f.use}]`).checked = true;
   document.querySelector(`input[name=pump][value="${f.pumped ? 1 : 0}"]`).checked = true;
@@ -1028,6 +1058,7 @@ function connect() {
       const m30 = Math.max(0, FAMS.findIndex(f => f.grade === 'M30')); famSel.value = m30; famNote(FAMS[m30]);
       famSel.disabled = false; runBtn.disabled = false; runBtn.textContent = 'Run the pipeline';
       status.textContent = 'Connected. All 16 IS code sources were hash-verified when the server started.';
+      showTarget();
     } catch (e) {
       connecting = null;
       status.textContent = 'Could not reach the pipeline server. Try again in a minute.'; runBtn.textContent = 'Retry'; runBtn.disabled = false; runBtn.dataset.retry = '1';
@@ -1037,6 +1068,16 @@ function connect() {
 }
 new IntersectionObserver((es, o) => { if (es.some(e => e.isIntersecting)) { connect(); o.disconnect(); } }, {rootMargin: '1500px'}).observe($('design'));
 famSel.addEventListener('change', () => famNote(FAMS[+famSel.value]));
+/* target mean strength: asked from is_rules.target_mean_strength on the server, never computed here */
+async function showTarget() {
+  const g = $('o-grade').value, el = $('o-tmean');
+  try {
+    const t = await call('/api/target?grade=' + encodeURIComponent(g));
+    if ($('o-grade').value !== g) return;
+    el.innerHTML = `Target mean strength <b>${f1(t.target_mean, 2)} MPa</b><br>Derived from ${esc(g)} by IS 10262 cl 4.2: the larger of f<sub>ck</sub> + 1.65 S = ${f1(t.fck_plus_1_65S, 2)} and f<sub>ck</sub> + X = ${f1(t.fck_plus_X, 2)}, with S = ${f1(t.S, 1)} MPa (${esc(t.S_basis)}).`;
+  } catch (e) { el.textContent = 'Target strength is derived from the grade by the IS rule layer (IS 10262 cl 4.2).'; }
+}
+$('o-grade').addEventListener('change', showTarget);
 $('o-own').addEventListener('click', () => { const f = FAMS[+famSel.value]; if (f) setOrder(f); });
 
 const val = n => document.querySelector(`input[name="${n}"]:checked`).value;
@@ -1046,10 +1087,37 @@ $('order').addEventListener('submit', async e => {
   const f = FAMS[+famSel.value]; if (!f) return;
   const body = {family: f.family, grade: $('o-grade').value, slump: +slump.value, exposure: val('exp'), use: val('use'), pumped: val('pump') === '1'};
   runBtn.disabled = true; runBtn.textContent = 'Running the pipeline…'; status.textContent = 'Screening every legal mix and scoring it with the trained models.';
-  try { const P = await call('/api/design', body); render(P, body); status.textContent = `Pipeline finished in ${P.seconds ?? '?'} s.`; }
-  catch (err) { out.innerHTML = `<div class="rhead"><div class="big none">Pipeline error<small>${esc(err.message)}</small></div></div>`; status.textContent = 'The pipeline returned an error.'; }
+  const stop = running();
+  try { const P = await call('/api/design', body); stop(); render(P, body); status.textContent = `Pipeline finished in ${P.seconds ?? '?'} s.`; }
+  catch (err) { stop(); out.innerHTML = `<div class="rhead"><div class="big none">Pipeline error<small>${esc(err.message)}</small></div></div>`; status.textContent = 'The pipeline returned an error.'; }
   runBtn.disabled = false; runBtn.textContent = 'Run the pipeline';
 });
+
+/* While the request is out: a turning drum and the pipeline's stages in order.
+   Purely a waiting display. The stage marks advance on a timer, not on server progress, and no number is shown. */
+const STAGES = ['IS rule layer: limits for grade, exposure and use', 'IS 10262 design engine: candidate mixes',
+  'Legal screen: drop every mix that breaks a clause', 'Trained models: strength and slump for each survivor',
+  'Lab package: rank, pick trials, write batch weights'];
+function running() {
+  out.innerHTML = `<div class="running" role="status">
+    <svg viewBox="0 0 220 140" aria-hidden="true">
+      <rect x="20" y="120" width="180" height="4" rx="2" fill="#3A3F44"/>
+      <path d="M60 118 L76 92 M160 118 L144 92" stroke="#8E918F" stroke-width="5" stroke-linecap="round"/>
+      <g class="drum"><ellipse cx="110" cy="70" rx="58" ry="44" fill="#D6D2C8"/>
+        <path d="M70 46 Q110 70 150 46 M62 74 Q110 98 158 74 M74 100 Q110 116 146 100" stroke="#8E918F" stroke-width="5" fill="none"/>
+        <circle cx="110" cy="70" r="9" fill="#F2C12E"/></g>
+      <circle class="wheel" cx="44" cy="120" r="10" fill="#272B2F" stroke="#8E918F" stroke-width="3"/>
+      <circle class="wheel" cx="176" cy="120" r="10" fill="#272B2F" stroke="#8E918F" stroke-width="3"/>
+    </svg>
+    <ol>${STAGES.map(t => `<li>${t}</li>`).join('')}</ol>
+    <span class="elapsed">0 s</span></div>`;
+  const li = [...out.querySelectorAll('.running li')], el = out.querySelector('.elapsed'), t0 = Date.now();
+  let i = 0; li[0].classList.add('on');
+  const step = setInterval(() => { if (i < li.length - 1) { li[i].classList.replace('on', 'done'); li[++i].classList.add('on'); } }, 2600);
+  const tick = setInterval(() => { const s = Math.round((Date.now() - t0) / 1000); el.textContent = s > 20 ? `${s} s. The free server may be waking up.` : `${s} s`; }, 1000);
+  if (window.innerWidth < 980) out.scrollIntoView({behavior: 'smooth', block: 'start'});
+  return () => { clearInterval(step); clearInterval(tick); };
+}
 
 /* ---------- show the pipeline's output ---------- */
 const ICON = {cement_kg_m3: ['i-bag', 'Cement', 50, 'bags of 50 kg'], flyash_kg_m3: ['i-ash', 'Fly ash', 50, 'bags of 50 kg'],
