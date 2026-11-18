@@ -492,7 +492,7 @@ table.batch tbody tr[data-i]:hover td{background:var(--slab)}
     <div class="bcopy">
       <h2>From bags to cubes</h2>
       <p class="bcount" id="b-count">Step 1 of 8</p>
-      <div class="bnow" id="b-now"><b>Cement</b><span>385 kg of PPC, about 7.7 bags.</span></div>
+      <div class="bnow" id="b-now"><b>Cement</b><span>Cement, often with fly ash, is the binder. It glues everything else together.</span></div>
       <div class="bdots" id="b-dots" aria-hidden="true"></div>
     </div>
     <svg class="bscene" id="b-scene" viewBox="110 0 1000 560" role="img" aria-label="Materials go into a drum mixer, the concrete is cast into cubes, and a slump test is run">
@@ -562,8 +562,8 @@ table.batch tbody tr[data-i]:hover td{background:var(--slab)}
         <g id="c-drop" fill="#7d8186"></g>
         <line id="c-rod" x1="0" y1="0" x2="0" y2="150" stroke="#C9CCD1" stroke-width="6" stroke-linecap="round" opacity="0"/>
         <g id="c-result" opacity="0">
-          <text x="1500" y="250" text-anchor="middle" class="bbig">23.0 MPa at 7 days</text>
-          <text x="1500" y="290" text-anchor="middle" class="bsmall">Predicted 23.7. Pass mark 26.8. The model saw the miss coming.</text>
+          <text x="1500" y="250" text-anchor="middle" class="bbig">Crushed at 7 and 28 days</text>
+          <text x="1500" y="290" text-anchor="middle" class="bsmall">The load at which a cube breaks gives the concrete's strength.</text>
         </g>
       </g>
 
@@ -580,8 +580,8 @@ table.batch tbody tr[data-i]:hover td{background:var(--slab)}
         <g id="s-measure" opacity="0">
           <line x1="2180" y1="230" x2="2580" y2="230" stroke="#F2C12E" stroke-width="4"/>
           <path d="M2620 230 V286" stroke="#F2C12E" stroke-width="4"/><path d="M2612 238 L2620 228 L2628 238 M2612 278 L2620 288 L2628 278" fill="none" stroke="#F2C12E" stroke-width="4"/>
-          <text x="2640" y="268" class="bbig" style="font-size:40px">70 mm</text>
-          <text x="2500" y="160" text-anchor="middle" class="bsmall">Predicted 78 mm (90% range 40 to 150). Ordered 150 mm.</text>
+          <text x="2640" y="268" class="bbig" style="font-size:40px">slump</text>
+          <text x="2500" y="160" text-anchor="middle" class="bsmall">The drop from the top of the cone to the top of the concrete.</text>
         </g>
       </g>
     </svg>
@@ -1148,14 +1148,14 @@ new IntersectionObserver((es, o) => { if (es.some(e => e.isIntersecting)) { cons
   const $ = id => document.getElementById(id), NS = 'http://www.w3.org/2000/svg';
   const sec = $('batching'), scene = $('b-scene');
   const STEPS = [
-    [0, .11, 'Cement', '358.75 kg of PPC and 51.25 kg of fly ash: design 1 of the pipeline\u2019s M30, 120 mm, severe order.'],
-    [.11, .21, 'Crushed sand', '774.1 kg of manufactured sand.'],
-    [.21, .31, '20 mm aggregate', '1,095.0 kg of crushed basalt, in two sizes: 702.6 kg of 20\u201310 mm and 392.4 kg of 10\u20134.75 mm.'],
-    [.31, .39, 'Superplasticiser', '5.83 kg of PCE, 1.421% of the binder, added just before the water.'],
-    [.39, .47, 'Water', '153.9 litres. Water to binder ratio 0.375.'],
+    [0, .11, 'Cement', 'Cement, often with fly ash, is the binder. It glues everything else together.'],
+    [.11, .21, 'Crushed sand', 'Manufactured sand fills the gaps between the stones.'],
+    [.21, .31, '20 mm aggregate', 'Crushed stone gives concrete its body and takes up most of its volume.'],
+    [.31, .39, 'Superplasticiser', 'Added just before the water, so the mix flows without needing extra water.'],
+    [.39, .47, 'Water', 'Water starts the reaction that hardens the cement. Less water means stronger concrete.'],
     [.47, .6, 'Mixing', 'The drum turns until the colour and texture are even.'],
-    [.6, .765, 'Casting cubes', 'Three 150 mm cubes, filled in three layers with 35 strokes each (IS 516), cured in water and crushed at 7 days. The lab’s M30 cast, with the dose cut to 0.20%, reached 23.0 MPa against 23.7 predicted.'],
-    [.765, 1.01, 'Slump test', 'Fill the cone in four layers with 25 strokes each (IS 1199), lift it, and measure the drop. The cast measured 70 mm against 78 predicted. The order asked for 150, which the engine had warned it could not promise.']];
+    [.6, .765, 'Casting cubes', 'Concrete goes into 150 mm cube moulds in three layers, tamped 35 times each (IS 516). The cubes cure in water and are crushed at 7 and 28 days to measure strength.'],
+    [.765, 1.01, 'Slump test', 'The cone is filled in four layers with 25 strokes each (IS 1199), then lifted. How far the concrete drops is the slump, a measure of how easily it flows.']];
   const dots = $('b-dots'); STEPS.forEach(() => dots.appendChild(document.createElement('i')));
   const seg = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
   const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
