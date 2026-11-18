@@ -8,7 +8,7 @@ It follows the Indian Standards: IS 456 and IS 10262. Then it picks the next lab
 Final-year capstone, NMIMS MPSTME. Paper submitted to *The Indian Concrete Journal*:
 *A code-constrained decision engine for M-sand concrete mix design from Indian ready-mix plant data.*
 
-**[Live demo →](https://geekdaksh.github.io/SDL-Mixed-Design/)** Design an order in your browser. The real rule engine runs on your device, and a distilled copy of the trained models scores every mix.
+**[Live demo →](https://geekdaksh.github.io/SDL-Mixed-Design/)** Design an order in your browser. The demo sends it to a private server that runs this repository's pipeline exactly as notebooks 12 and 14 do (`selection.lab_package` with the trained residual GP models), and shows what it returns.
 
 ## What it does
 
@@ -62,7 +62,7 @@ Notebook 03 trains the strength and slump ensembles reported in the paper. Noteb
 
 ## Data
 
-The 401 mix records come from ten ready-mix plants and laboratories in Maharashtra. They are **not included** here; the paper's data statement applies (available from the corresponding author on request, subject to the data partners' consent). The demo's distilled models were trained only on engine-generated mixes, so they hold no plant records.
+The 401 mix records come from ten ready-mix plants and laboratories in Maharashtra. They are **not included** here; the paper's data statement applies (available from the corresponding author on request, subject to the data partners' consent). The demo's server keeps the dataset and trained models private; only results leave it.
 To run the notebooks, put your own data in `data/01_RAW_dataset.csv`, in the same column format.
 The IS code PDFs are copyrighted by BIS, so they are not included either. Put them in `IS_codes/`.
 
