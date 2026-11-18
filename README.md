@@ -1,4 +1,6 @@
-# Self-Driving Lab for M-Sand Concrete
+# Pramāṇa
+
+**A self-driving lab for M-Sand concrete.** *Pramāṇa* (प्रमाण) is Sanskrit for proof, measure and standard.
 
 An AI lab assistant that designs concrete mixes made with manufactured sand (M-Sand).
 It follows the Indian Standards: IS 456 and IS 10262. Then it picks the next lab trials to run.
